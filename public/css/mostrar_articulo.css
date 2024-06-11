@@ -1,0 +1,33 @@
+@import url('Object.css');
+
+.product-images {
+    max-width: 100px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.main-image {
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ddd;
+}
+.product-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.product-price {
+    font-size: 1.5em;
+    color: #FF5733;
+    margin-top: 10px;
+}
+.color-swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.size-button {
+    margin: 5px;
+}
