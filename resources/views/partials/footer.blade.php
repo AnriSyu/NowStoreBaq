@@ -1,4 +1,4 @@
-<footer class="nsb-footer">
+<footer class="nsb-footer mt-auto">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-4">

@@ -1,0 +1,61 @@
+@import url('Object.css');
+@import url('p/checkbox.css');
+
+body {
+    background-color:#f4f4f4;
+}
+
+.nsb-activo {
+    color:var(--nsb-first-color);
+}
+
+.nsb-card-body{
+    margin-top:15px;
+    margin-bottom: 5px;
+}
+
+.nsb-card-pedido{
+    width: 30%;
+    position: fixed;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.nsb-articulo-precio-borrado{
+    font-size:0.8em;
+    margin-top: 10px;
+    margin-left:10px;
+    color: #8f8f8f;
+}
+
+
+.nsb-articulo-precio-descuento{
+    color:var(--nsb-first-color);
+    font-size:1em;
+}
+
+.nsb-articulo-descuento{
+    font-size: 0.6em;
+    margin-left:10px;
+    margin-top:10px;
+    background-color: var(--nsb-second-color);
+    padding-right:5px;
+    padding-left:5px;
+}
+
+.nsb-selector-cantidad {
+    text-align: center;
+    width: 50px;
+    border: 1px solid #ddd;
+}
+.nsb-selector-cantidad button {
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+}
+
+#icon_borrar_articulo{
+    cursor:pointer;
+}

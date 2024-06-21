@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticuloController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,5 +18,8 @@ Route::get('/', function () {
     return view('buscar_articulo');
 });
 
-Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);
+route::get('/carrito',function() {
+    return view('carrito_articulos');
+});
 
+Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);

@@ -18,23 +18,84 @@
     <script src="{{asset('js/lib/jquery-3.7.1.min.js')}}"></script>
     <script src="{{asset('js/lib/sweetalert2.min.js')}}"></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     @include('partials.navbar')
-    <main class="nsb-search-article-form">
-        <div class="container text-center">
-            <h1 class="nsb-titulo">Compra el artículo que estás buscando de Shein</h1>
-            <p class="nsb-parrafo my-5">Introduce el enlace del artículo que deseas comprar en Shein y nosotros te ayudamos a encontrarlo</p>
-            <form action="/articulo" method="post">
+
+    <main class="nsb-search-article-form flex-fill">
+        <div class="container">
+            <h1 class="nsb-titulo text-center">Compra el artículo que estás buscando de Shein</h1>
+            <p class="nsb-parrafo my-5 text-center">Introduce el enlace del artículo que deseas comprar en Shein y nosotros te ayudamos a encontrarlo</p>
+            <form  action="/articulo" method="post" id="form_buscar_articulo">
                 @csrf
-                <div class="input-group">
-                    <input type="text" name="url_articulo" placeholder="Introduce el enlace del artículo">
-                    <button type="submit">Buscar artículo</button>
+                <small class="nsb-texto-ayuda">¿cómo hacer esto?</small>
+                <div class="input-group mt-1">
+                    <input type="text" name="input_url_articulo" id="input_url_articulo" placeholder="Introduce el enlace del artículo" value="{{ old('input_url_articulo') }}">
+                    <button type="submit" name="button_buscar" id="button_buscar">Buscar artículo</button>
+                </div>
+                <div class="alert alert-danger" role="alert" id="alert_mensaje_error">
+                    <span id="span_texto_error"></span>
                 </div>
             </form>
         </div>
     </main>
-    <div class="fixed-bottom">
+
     @include('partials.footer')
+
+    @if(session('error'))
+    <div class="modal fade" id="modal_timeout" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-body mt-5 mb-4">
+                    <h1>¡Lo sentimos!</h1>
+                    <span class="nsb-texto-solicitud">No se pudo hacer esta solicitud.</span>
+                    @if(!empty($errorDetails))
+                        <p>Detalles: {{ $errorDetails }}</p>
+                    @endif
+                </div>
+                <div class="modal-footer" style="margin:auto">
+                    <form action="/articulo" method="post">
+                        @csrf
+                        <input type="hidden" name="input_url_articulo" value="{{ old('input_url_articulo') }}">
+                        <button type="submit" class="btn nsb-btn nsb-btn-primario" id="button_reintentar">Reintentar</button>
+                    </form>
+                    <button type="button" class="btn nsb-btn nsb-btn-cancelar" id="button_cancelar" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#modal_timeout').modal('show');
+            $("#modal-loader").modal('hide');
+        });
+    </script>
+    @endif
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modal-loader" style="background-color:#000000bf">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            $("#alert_mensaje_error").hide();
+            $("#button_buscar,#button_reintentar").click(function(){
+                if($("#input_url_articulo").val() === "") {
+                    $("#alert_mensaje_error").show();
+                    $("#span_texto_error").text("Debes introducir el enlace del artículo en el campo de texto.")
+                    return false;
+                }
+            })
+            $("#form_buscar_articulo").submit(function(){
+                $("#modal-loader").modal('show')
+            })
+
+            $("#nsb-texto-ayuda").click(function(){
+            })
+
+        })
+    </script>
+
 </body>
 </html>

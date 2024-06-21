@@ -2,6 +2,8 @@
     --nsb-first-color:#BC3475;
     --nsb-first-color-darker:#A52C6A;
     --nsb-second-color:#FFCC2A;
+    --nsb-gray-color:#ecf0f1;
+    --nsb-gray-color-darker:#bdc3c7;
     --nsb-font-family: "Poppins", sans-serif;
 }
 *{
@@ -33,22 +35,40 @@
     font-weight: bold;
 }
 
-.nsb-btn-registro{
+.nsb-btn-registro, .nsb-btn-primario{
     background-color: var(--nsb-first-color);
     color: #fff;
     width: 300px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-.nsb-btn-registro:hover{
+.nsb-btn-registro:hover, .nsb-btn-primario:hover{
     background-color: var(--nsb-first-color-darker);
     color:#fff;
 }
 /*cuando le doy click al boton*/
-.nsb-btn-registro:active{
+.nsb-btn-registro:active, .nsb-btn-primario:active{
     transform: translateY(2px);
     background-color: var(--nsb-first-color-darker)!important;
     color:#fff!important;
 }
+
+.nsb-btn-cancelar{
+    background-color: var(--nsb-gray-color);
+    color: #000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.nsb-btn-cancelar:hover{
+    background-color: var(--nsb-gray-color-darker);
+    color:#000;
+}
+
+.nsb-btn-cancelar:active{
+    transform: translateY(2px);
+    background-color: var(--nsb-gray-color-darker)!important;
+    color:#000!important;
+}
+
 .nsb-a-item{
     color: #000;
     text-decoration: none;
@@ -73,6 +93,8 @@
     color: #fff;
     padding: 10px 0;
     text-align: center;
+    width: 100%;
+    height: auto;
 }
 
 .nsb-footer-titulo{

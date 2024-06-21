@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg nsb-navbar">
+<nav class="navbar navbar-expand-lg nsb-navbar" style="background-color:#fff">
     <div class="container">
         <a class="navbar-brand" href="/">
             <img src="{{asset('img/nowstorebaq_logo.png')}}" alt="NowStoreBaq" class="nsb-logo img-fluid">
@@ -23,7 +23,7 @@
                 </li>
             </ul>
             <div class="d-flex" style="margin-left: auto">
-                <ul class="navbar-nav">
+                <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link nsb-a-item" href="/login">
                             <i class="fas fa-user-circle fa-2x"></i>
@@ -32,7 +32,7 @@
                     <li class="nav-item">
                         <a class="nav-link nsb-a-item" href="/carrito">
                             <i class="fas fa-shopping-cart fa-2x"></i>
-                            <span class="">0</span>
+                            <span id="span_cantidad_articulos_carrito_navbar" style="font-weight: bolder"></span>
                         </a>
                     </li>
                 </ul>
@@ -40,3 +40,18 @@
         </div>
     </div>
 </nav>
+<script>
+    (function() {
+
+        let carrito = localStorage.getItem('carrito');
+        carrito = carrito ? JSON.parse(carrito) : [];
+
+        let cantidad_total = 0;
+
+        carrito.forEach(item => {
+            cantidad_total += item.cantidad;
+        });
+
+        document.querySelector("#span_cantidad_articulos_carrito_navbar").innerHTML = cantidad_total.toString();
+    })();
+</script>

@@ -4,7 +4,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
 }
 .nsb-titulo{
     font-size: 2rem;
@@ -24,14 +23,14 @@
 }
 
 input[type="text"] {
-    width: 70%;
+    width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
     outline: none;
 }
 
-button {
+input + button {
     padding: 10px 20px;
     border: none;
     border-radius: 0 5px 5px 0;
@@ -40,7 +39,54 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+input + button:hover {
     background-color: var(--nsb-first-color-darker);
 }
 
+.nsb-texto-solicitud{
+    font-size:1.5rem;
+}
+
+.nsb-texto-ayuda{
+    margin-left:50px;
+    color:deepskyblue;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    color:#fff;
+    width: fit-content;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 30px;
+    padding-bottom: 8px;
+    background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+    animation: l2 2s linear infinite;
+}
+.loader:before {
+    content:"Cargando, espera mientras procesamos tu solicitud..."
+}
+@keyframes l2 {to{background-size: 100% 3px}}
+
+@media (max-width: 600px) {
+    input[type="text"] {
+        width:100%;
+        border-radius: 0;
+    }
+
+    input + button{
+        margin-top:20px;
+        border-radius: 0;
+    }
+
+    .nsb-texto-ayuda{
+        margin-left:0;
+    }
+}
+
+/* Dispositivos móviles grandes y tabletas pequeñas (retrato) */
+@media (min-width: 601px) and (max-width: 768px) {
+
+}
