@@ -2,7 +2,7 @@ const cambiarCantidad = cantidad => {
     const inputCantidad = $("#input_cantidad")
     let cantidadActual = parseInt(inputCantidad.val());
     cantidadActual += cantidad;
-    if (cantidadActual < 1) cantidadActual = 1; // Prevent negative or zero quantity
+    if (cantidadActual < 1) cantidadActual = 1;
     inputCantidad.val(cantidadActual);
 }
 $(function() {
@@ -99,7 +99,8 @@ $(function() {
             precio_venta_con_simbolo: spanPrecioActual.text(),
             color: $("#span_articulo_color").text(),
             talla: nsbBtnTalla.data('talla'),
-            cantidad: parseInt($("#input_cantidad").val())
+            cantidad: parseInt($("#input_cantidad").val()),
+            imagen:$("#img_principal").attr('src')
         }
 
         articulo.precio_original_con_simbolo = "0";

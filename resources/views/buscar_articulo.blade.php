@@ -16,7 +16,6 @@
     <script src="{{asset("js/lib/bootstrap.bundle.min.js")}}"></script>
     <script src="{{asset("js/lib/all.min.js")}}"></script>
     <script src="{{asset('js/lib/jquery-3.7.1.min.js')}}"></script>
-    <script src="{{asset('js/lib/sweetalert2.min.js')}}"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
     @include('partials.navbar')

@@ -24,7 +24,6 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a class="nsb-activo">Carrito</a></li>
-                    <li class="breadcrumb-item"><a >Confirmar</a></li>
                 </ol>
             </nav>
         </div>
@@ -34,72 +33,34 @@
                     <div class="card-body nsb-card-body">
                         <div class="d-flex">
                             <div class="checkbox-wrapper-19">
-                                <input type="checkbox" id="checkbox_todo" />
+                                <input type="checkbox" id="checkbox_todo" checked />
                                 <label for="checkbox_todo" class="check-box"></label>
                             </div>
-                            <h3 class="card-title"> TODOS LOS ARTÍCULOS (2)</h3>
+                            <h3 class="card-title"> TODOS LOS ARTÍCULOS <span id="span_cantidad_articulos"></span></h3>
                         </div>
                     </div>
                 </div>
-
                 <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row align-items-center g-0">
-                            <div class="col-1 text-center">
-                                <div class="checkbox-wrapper-19">
-                                    <input type="checkbox" id="" />
-                                    <label for="cbtest-19" class="check-box"></label>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <img src="https://placehold.co/500" class="img-fluid">
-                            </div>
-                            <div class="col ms-4">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <p>SHEIN EZwear 2 piezas Camiseta corta de verano para mujer con cuello redondo casual y ajuste delgado</p>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mb-3">
-                                    <div class="col d-flex">
-                                        <span class="me-4"><strong>Color: </strong> Negro</span>
-                                        <span><strong>Talla: </strong> M</span>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-grow-1">
-                                                <span class="nsb-articulo-precio-descuento " id="span_precio_actual">$50.000</span>
-                                                <del class="nsb-articulo-precio-borrado" id="span_precio_original">$100.000</del>
-                                                <span class="nsb-articulo-descuento" id="span_descuento">-50%</span>
-                                            </div>
-                                            <div class="flex-row-reverse ">
-                                                <button type="button" class="btn btn-light" onclick="cambiarCantidad(-1)">-</button>
-                                                <input type="text" class="nsb-selector-cantidad" value="1">
-                                                <button type="button" class="btn btn-light" onclick="cambiarCantidad(1)">+</button>
-                                            </div>
-                                            <i class="fas fa-trash-can ms-4" id="icon_borrar_articulo"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card-body" id="cardbody_lista_articulos">
+
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4">
-                <div class="card mb-3 nsb-card-pedido">
+                <div class="card mb-3 nsb-card-pedido" id="card_pedido">
                     <div class="card-body">
-                        <h5 class="card-title">Resumen Del Pedido</h5>
-                        <p>$70.102</p>
-                        <p>Descuento: $3.690</p>
-                        <button type="button" class="btn btn-primary btn-block">Pagar ahora (2)</button>
+                        <h3 class="card-title">Resumen Del Pedido</h3>
+                        <div class="text-start mt-4">
+                            <span class="nsb-resumen-precio" id="span_resumen_precio"></span>
+                            <p class="nsb-resumen-descuento" id="p_resumen_descuento"></p>
+                        </div>
+                        <button id="button_pagar" type="button" class="mt-3 btn nsb-btn nsb-btn-primario" style="width: 100%;font-size:2em">GENERAR PEDIDO <span class="span_cantidad_articulos" id="span_cantidad_articulos_pagar"></span></button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
     @include('partials.footer')
+    <script src="{{asset('js/carrito_articulos.js')}}"></script>
 </body>

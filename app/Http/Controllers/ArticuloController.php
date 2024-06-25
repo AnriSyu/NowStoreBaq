@@ -16,7 +16,7 @@ class ArticuloController extends Controller
         $url = $request->input('input_url_articulo');
         $api = env('API_URL_SHEIN_SCRAPPER');
         $urlCompleta = $api . $url;
-//        try {
+        try {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlCompleta);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -54,6 +54,7 @@ class ArticuloController extends Controller
 
             if($crawler->filter('.color-block > .sub-title')->count()>0):
                 $articulo['color'] = $crawler->filter('.color-block > .sub-title')->text();
+                $articulo['color'] = str_replace(":","",$articulo['color']);
             endif;
 
             $articulo['iva'] = 0;
@@ -174,10 +175,10 @@ class ArticuloController extends Controller
 
                 endif;
             endif;
-//        }catch (\Exception $e) {
-//            $errorDetails = $e->getMessage();
-//            return Redirect::back()->withInput()->with('error', 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo.'.$errorDetails);
-//        }
+        }catch (\Exception $e) {
+            $errorDetails = $e->getMessage();
+            return Redirect::back()->withInput()->with('error', 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo.'.$errorDetails);
+        }
 
 
         //No se pueden obtener

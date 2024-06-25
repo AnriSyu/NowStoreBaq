@@ -22,4 +22,8 @@ route::get('/carrito',function() {
     return view('carrito_articulos');
 });
 
+route::get('/ingresar',function(){
+   return view('usuario_ingresar');
+});
+
 Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);

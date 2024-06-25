@@ -2,6 +2,7 @@
     --nsb-first-color:#BC3475;
     --nsb-first-color-darker:#A52C6A;
     --nsb-second-color:#FFCC2A;
+    --nsb-second-color-darker:#CC9F00;
     --nsb-gray-color:#ecf0f1;
     --nsb-gray-color-darker:#bdc3c7;
     --nsb-font-family: "Poppins", sans-serif;
@@ -33,6 +34,13 @@
     cursor: pointer;
     transition: background-color 0.3s;
     font-weight: bold;
+}
+
+.nsb-btn-primario:disabled{
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .nsb-btn-registro, .nsb-btn-primario{

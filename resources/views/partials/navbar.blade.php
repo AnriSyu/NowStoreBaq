@@ -25,7 +25,7 @@
             <div class="d-flex" style="margin-left: auto">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link nsb-a-item" href="/login">
+                        <a class="nav-link nsb-a-item" href="/ingresar">
                             <i class="fas fa-user-circle fa-2x"></i>
                         </a>
                     </li>
