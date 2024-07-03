@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\DomCrawler\Crawler;
-use Defuse\Crypto\Crypto;
-use Defuse\Crypto\Key;
 
 class ArticuloController extends Controller
 {
@@ -74,7 +72,7 @@ class ArticuloController extends Controller
             });
 
             if (str_contains($scriptContent, "window.gbRawData")):
-                if (preg_match('/window\.gbRawData\s*=\s*(\{.*?\});/s', $scriptContent, $matches)):
+                if (preg_match('/window\.gbRawData\s*=\s*(\{.*?});/s', $scriptContent, $matches)):
 
                     $jsonCleaned = strstr($matches[1], 'document.dispatchEvent', true);
                     $jsonCleaned = rtrim($jsonCleaned, ',');

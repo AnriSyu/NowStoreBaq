@@ -1,0 +1,42 @@
+@import url('Object.css');
+
+.nsb-card-confirmar-cuenta{
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin: 15vh auto;
+}
+
+.nsb-card-header-confirmar-cuenta{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.nsb-title-confirmar-cuenta{
+    font-size: 1.5rem;
+    color: #000;
+    font-weight: bolder;
+}
+
+.nsb-card-body-confirmar-cuenta{
+    margin-bottom: 20px;
+}
+
+.nsb-text-confirmar-cuenta{
+    font-size: 1rem;
+    color: #1c1c1c;
+}
+.nsb-btn-confirmar-cuenta{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--nsb-first-color);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

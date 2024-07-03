@@ -78,11 +78,11 @@
 }
 
 .nsb-a-item{
-    color: #000;
+    color: #000!important;
     text-decoration: none;
 }
 .nsb-a-item:hover{
-    color: var(--nsb-first-color);
+    color: var(--nsb-first-color) !important;
     text-decoration: underline;
 }
 .nsb-a-login:active{

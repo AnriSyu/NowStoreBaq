@@ -1,2 +1,5 @@
 @import url('Object.css');
 
+.nsb-is-invalid{
+    border: 1px solid red;
+}

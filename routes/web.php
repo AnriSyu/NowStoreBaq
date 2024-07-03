@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticuloController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,14 @@ route::get('/carrito',function() {
 });
 
 route::get('/ingresar',function(){
-   return view('usuario_ingresar');
-});
+    return view('usuario_ingresar');
+})->name("login");
+
+Route::get('/perfil', [UsuarioController::class, 'mostrarPerfil'])->name('perfil')->middleware('auth:web');
 
 Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);
+
+route::post('/rginsc', [UsuarioController::class, 'registroIniciarSesion']);
+
+Route::get('/verificar/{token}', [UsuarioController::class, 'verificarCuenta']);
+
