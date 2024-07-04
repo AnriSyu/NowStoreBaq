@@ -46,11 +46,15 @@ $(function(){
         }).done(function(response){
             $('#span_error').html("");
             if(response.estado === "ok") {
-                Swal.fire({
-                    title: "Registro exitoso",
-                    text: "Entra en tu correo para verificar tu cuenta",
-                    icon: "success"
-                });
+                if(response.tipo==="registro"){
+                    Swal.fire({
+                        title: "Registro exitoso",
+                        text: "Entra en tu correo para verificar tu cuenta",
+                        icon: "success"
+                    });
+                }else{
+                    window.location.href = '/perfil';
+                }
             }
         }).fail(function(response){
             $('#span_error').html(response.mensaje).show();

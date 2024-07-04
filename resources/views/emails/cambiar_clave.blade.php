@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificación de correo electrónico</title>
+    <title>Recuperación de clave</title>
     <style>
         /* Estilos generales */
         body {
@@ -40,20 +40,20 @@
             transition: background-color 0.3s ease;
         }
         a:hover {
-            background-color: #BC3475;
+            background-color: #a83265;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>¡Bienvenido a NowStoreBaq!</h1>
-    <p>Gracias por registrarte en nuestro sitio. Antes de comenzar, necesitamos verificar tu dirección de correo electrónico.</p>
-    <p>Por favor, haz clic en el siguiente botón para verificar tu correo electrónico:</p>
-    <a href="{{ url('/verificar/' . $token) }}">Verificar correo electrónico</a>
+    <h1>Recuperación de cuenta</h1>
+    <p>Hemos recibido una solicitud para cambiar tu clave. Si no solicitaste un cambio de clave, por favor ignora este correo.</p>
+    <p>Para cambiar tu clave, haz clic en el siguiente botón:</p>
+    <a href="{{ url('/cambiar_clave/' . $token) }}">Cambiar mi clave</a>
     <p>Si no puedes hacer clic en el botón, copia y pega el siguiente enlace en la barra de direcciones de tu navegador:</p>
-    <p>{{ url('/verificar/' . $token) }}</p>
-    <p>Este enlace de verificación caducará en 24 horas. Si no verificas tu correo electrónico dentro de este tiempo, deberás registrarte nuevamente.</p>
-    <p>¡Gracias por unirte a nosotros!</p>
+    <p>{{ url('/cambiar_clave/' . $token) }}</p>
+    <p>Este enlace caducará en 60 minutos. Si no cambias tu clave dentro de este tiempo, deberás solicitar un nuevo enlace de recuperación.</p>
+    <p>¡Gracias por utilizar nuestros servicios!</p>
     <p>El equipo de NowStoreBaq</p>
 </div>
 </body>
