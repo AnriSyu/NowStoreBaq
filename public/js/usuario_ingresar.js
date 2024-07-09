@@ -57,7 +57,13 @@ $(function(){
                 }
             }
         }).fail(function(response){
-            $('#span_error').html(response.mensaje).show();
+            const spanError = $('#span_error');
+            spanError.empty();
+            $.each(response.responseJSON.mensaje, function(campo, mensajes) {
+                $.each(mensajes, function(indice, mensaje) {
+                    spanError.append('<p>' + mensaje + '</p>');
+                });
+            });
         })
 
     })

@@ -21,11 +21,11 @@ class UsuarioController extends Controller
 
     public function mostrarIngresar(){
         $usuario = Auth::user();
-        if($usuario){
-            return redirect("perfil");
-        }else{
-            return view("usuario_ingresar");
-        }
+        if($usuario):
+            return redirect("usuario.perfil");
+        else:
+            return view("usuario.usuario_ingresar");
+        endif;
     }
 
     public function registroIniciarSesion(Request $request): JsonResponse | RedirectResponse
@@ -103,17 +103,17 @@ class UsuarioController extends Controller
     {
         $user = Usuario::where('token_verificacion', $token)->first();
 
-        if (!$user) {
-            return view('verificar_cuenta', ['estado' => 'error', 'mensaje' => 'Token de verificación no válido.']);
-        }
+        if (!$user):
+            return view('usuario.verificar_cuenta', ['estado' => 'error', 'mensaje' => 'Token de verificación no válido.']);
+        endif;
 
-        if ($user->esta_verificado) {
-            return view('verificar_cuenta', ['estado' => 'error', 'mensaje' => 'Este token ya ha sido utilizado para verificar el correo electrónico.']);
-        }
+        if ($user->esta_verificado):
+            return view('usuario.verificar_cuenta', ['estado' => 'error', 'mensaje' => 'Este token ya ha sido utilizado para verificar el correo electrónico.']);
+        endif;
 
-        if ($user->fecha_expiracion_verificacion && Carbon::parse($user->fecha_expiracion_verificacion)->lt(Carbon::now())) {
-            return view('verificar_cuenta', ['estado' => 'error', 'mensaje' => 'El enlace de verificación ha expirado. Por favor, solicita un nuevo enlace de verificación.']);
-        }
+        if ($user->fecha_expiracion_verificacion && Carbon::parse($user->fecha_expiracion_verificacion)->lt(Carbon::now())):
+            return view('usuario.verificar_cuenta', ['estado' => 'error', 'mensaje' => 'El enlace de verificación ha expirado. Por favor, solicita un nuevo enlace de verificación.']);
+        endif;
 
         $user->update([
             'esta_verificado' => true,
@@ -122,7 +122,7 @@ class UsuarioController extends Controller
             'fecha_expiracion_verificacion' => null,
         ]);
 
-        return view('verificar_cuenta', ['estado' => 'ok', 'mensaje' => 'Correo electrónico verificado exitosamente.']);
+        return view('usuario.verificar_cuenta', ['estado' => 'ok', 'mensaje' => 'Correo electrónico verificado exitosamente.']);
     }
 
     public function satinizar($input): string
@@ -132,7 +132,7 @@ class UsuarioController extends Controller
     public function mostrarPerfil()
     {
         $usuario = Auth::user();
-        return view("usuario_perfil",["usuario"=>$usuario]);
+        return view("usuario.usuario_perfil",["usuario"=>$usuario]);
     }
 
 
@@ -144,45 +144,44 @@ class UsuarioController extends Controller
         $validator = Validator::make($input, [
             'input_correo' => 'required|email|max:255',
         ], [
-            'input_correo.required' => 'El correo es obligatorio.',
+            'input_correo.required' => 'Debes escribir un correo.',
             'input_correo.email' => 'El correo debe ser una dirección válida.',
             'input_correo.max' => 'El correo no puede tener más de 255 caracteres.',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails()):
             return redirect()->back()->withErrors($validator)->withInput();
-        }
+        endif;
 
 
         $usuario = Usuario::where('correo', $input["input_correo"])->first();
 
-        if (!$usuario) {
-            return back()->withErrors(['input_correo' => 'El correo electrónico no está registrado.']);
-        }
+        if ($usuario):
+            $token = Str::random(60);
+            $usuario->token_cambio_clave = $token;
+            $usuario->fecha_expiracion_cambio_clave = Carbon::now()->addMinutes(60);
+            $usuario->save();
 
-        $token = Str::random(60);
-        $usuario->token_cambio_clave = $token;
-        $usuario->fecha_expiracion_cambio_clave = Carbon::now()->addMinutes(60);
-        $usuario->save();
+            Mail::to($input['input_correo'])->send(new CambiarClave($token));
 
-        Mail::to($input['input_correo'])->send(new CambiarClave($token));
+        endif;
 
-        return back()->with('status', 'Se ha enviado un enlace para cambiar la clave a tu correo electrónico.');
+        return back()->with('status', 'Si tu correo electrónico está registrado, se le enviará un enlace para cambiar su contraseña.');
 
     }
 
     public function cambiarClave($token) {
         $user = Usuario::where('token_cambio_clave', $token)->first();
 
-        if (!$user) {
-            return view('cambiar_clave', ['estado' => 'error', 'mensaje' => 'Token de cambio de clave no válido.']);
-        }
+        if (!$user):
+            return view('recuperacion_cuenta.cambiar_clave', ['estado' => 'error', 'mensaje' => 'Token de cambio de clave no válido.']);
+        endif;
 
-        if ($user->fecha_expiracion_cambio_clave && Carbon::parse($user->fecha_expiracion_cambio_clave)->lt(Carbon::now())) {
-            return view('cambiar_clave', ['estado' => 'error', 'mensaje' => 'El enlace de cambio de clave ha expirado. Por favor, solicita un nuevo enlace de cambio de clave.']);
-        }
+        if ($user->fecha_expiracion_cambio_clave && Carbon::parse($user->fecha_expiracion_cambio_clave)->lt(Carbon::now())):
+            return view('recuperacion_cuenta.cambiar_clave', ['estado' => 'error', 'mensaje' => 'El enlace de cambio de clave ha expirado. Por favor, solicita un nuevo enlace de cambio de clave.']);
+        endif;
 
-        return view('cambiar_clave', ['estado' => 'ok', 'token' => $token]);
+        return view('recuperacion_cuenta.cambiar_clave', ['estado' => 'ok', 'token' => $token]);
     }
 
     public function actualizarClave(Request $request)
@@ -207,17 +206,21 @@ class UsuarioController extends Controller
             'input_clave.same' => 'Las dos claves deben ser iguales'
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails()):
             return redirect()->back()->withErrors($validator)->withInput();
-        }
+        endif;
 
         $user = Usuario::where('token_cambio_clave', $request->token)
             ->where('fecha_expiracion_cambio_clave', '>=', Carbon::now())
             ->first();
 
-        if (!$user) {
-            return back()->withErrors(['input_clave' => 'El token es inválido o ha expirado.']);
-        }
+        if (!$user):
+            return back()->withErrors(['other_error' => 'El token es inválido o ha expirado.']);
+        endif;
+
+        if($user->clave == $input['input_clave']):
+            return back()->withErrors(['other_error'=> 'La nueva contraseña no puede ser la misma que la anterior.']);
+        endif;
 
         $user->clave = bcrypt($input['input_clave']);
         $user->token_cambio_clave = null;

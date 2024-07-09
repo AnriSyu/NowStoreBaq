@@ -2,19 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpClient\HttpClient;
 
 class ArticuloController extends Controller
 {
     public function buscarArticuloScrapper(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'input_url_articulo' => 'required|url',
+        ], [
+            'input_url_articulo.required' => 'El campo es obligatorio.',
+            'input_url_articulo.url' => 'El campo debe ser un enlace válido.',
+        ]);
+
+        if ($validator->fails()):
+            return back()->withErrors($validator)->withInput();
+        endif;
+
         $articulo = [];
+
         $url = $request->input('input_url_articulo');
+
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+
+        $urlParsed = parse_url($url);
+
+        $host = $urlParsed['host'] ?? '';
+
+        if (!str_contains($host, 'shein.com')):
+            return back()->withErrors(['input_url_articulo' => 'El enlace debe ser de shein.com.'])->withInput();
+        endif;
+
+        $hostsRegistrados = [
+            'es.shein.com' => 'shein.com.co',
+            'm.shein.com.co' => 'shein.com.co',
+        ];
+
+        if (array_key_exists($host, $hostsRegistrados)) {
+            $newHost = $hostsRegistrados[$host];
+            $url = str_replace($host, $newHost, $url);
+        }
+
+
+        $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+        $url = addslashes($url);
+
         $api = env('API_URL_SHEIN_SCRAPPER');
+
         $urlCompleta = $api . $url;
+
         try {
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlCompleta);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -175,7 +219,7 @@ class ArticuloController extends Controller
             endif;
         }catch (\Exception $e) {
             $errorDetails = $e->getMessage();
-            return Redirect::back()->withInput()->with('error', 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo.'.$errorDetails);
+            return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
         }
 
 
@@ -187,7 +231,7 @@ class ArticuloController extends Controller
 //            return ['fitName' => $fitName, 'fitValue' => $fitValue];
 //        });
 
-        return view('mostrar_articulo', ['articulo' => $articulo]);
+        return view('principal.mostrar_articulo', ['articulo' => $articulo]);
     }
 
 

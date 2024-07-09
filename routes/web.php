@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('buscar_articulo');
+    return view('principal.buscar_articulo');
 });
 
 route::get('/carrito',function() {
-    return view('carrito_articulos');
+    return view('principal.carrito_articulos');
 });
 
 route::get('/recuperar_cuenta',function() {
-    return view('recuperar_cuenta');
+    return view('recuperacion_cuenta.recuperar_cuenta');
 });
 
 Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);

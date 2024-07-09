@@ -7,13 +7,14 @@
     "require": {
         "php": "^8.1",
         "ext-curl": "*",
+        "ext-pdo": "*",
         "defuse/php-encryption": "^2.4",
+        "fabpot/goutte": "^4.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "symfony/dom-crawler": "^6.4",
-        "ext-pdo": "*"
+        "symfony/dom-crawler": "^6.4"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
