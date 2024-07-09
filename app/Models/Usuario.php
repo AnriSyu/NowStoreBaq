@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $correo
@@ -33,6 +33,14 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereTokenVerificacion($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereUpdatedAt($value)
+ * @property int|null $id_rol
+ * @property string|null $token_cambio_clave
+ * @property string|null $fecha_expiracion_cambio_clave
+ * @property string|null $fecha_ultimo_cambio_clave
+ * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereFechaExpiracionCambioClave($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereFechaUltimoCambioClave($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereIdRol($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereTokenCambioClave($value)
  * @mixin \Eloquent
  */
 class Usuario extends Authenticatable

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\CambiarClave;
+use App\Mail\ClaveCambiada;
 use App\Mail\VerificacionCuenta;
+use App\Models\Rol;
 use App\Models\Usuario;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +24,7 @@ class UsuarioController extends Controller
     public function mostrarIngresar(){
         $usuario = Auth::user();
         if($usuario):
-            return redirect("usuario.perfil");
+            return redirect("perfil");
         else:
             return view("usuario.usuario_ingresar");
         endif;
@@ -59,7 +61,11 @@ class UsuarioController extends Controller
 
         if ($usuario):
             if (Hash::check($input['clave'], $usuario->clave)):
+                $rol = Rol::where('id_rol',$usuario->id_rol);
                 Auth::login($usuario);
+                if($rol->rol == 'administrador'):
+                    return redirect("admin");
+                endif;
                 return response()->json([
                     'estado' => 'ok',
                     'mensaje' => 'Login exitoso',
@@ -227,6 +233,8 @@ class UsuarioController extends Controller
         $user->fecha_expiracion_cambio_clave = null;
         $user->fecha_ultimo_cambio_clave = Carbon::now();
         $user->save();
+
+        Mail::to($user->correo)->send(new ClaveCambiada());
 
         return back()->with('status', 'Tu clave ha sido actualizada.');
     }
