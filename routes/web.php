@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\CatalogoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,8 @@ Route::get('/', function () {
 route::get('/carrito',function() {
     return view('principal.carrito_articulos');
 });
+
+route::get('/catalogo',[CatalogoController::class, 'mostrarCatalogo'])->name("catalogo");
 
 route::get('/recuperar_cuenta',function() {
     return view('recuperacion_cuenta.recuperar_cuenta');

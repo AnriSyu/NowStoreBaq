@@ -24,10 +24,13 @@ class UsuarioController extends Controller
     public function mostrarIngresar(){
         $usuario = Auth::user();
         if($usuario):
+            $rol = Rol::where('id',$usuario->id_rol)->first();
+            if($rol->rol === "administrador"):
+                return redirect("admin/dashboard");
+            endif;
             return redirect("perfil");
-        else:
-            return view("usuario.usuario_ingresar");
         endif;
+        return view("usuario.usuario_ingresar");
     }
 
     public function registroIniciarSesion(Request $request): JsonResponse | RedirectResponse
@@ -61,7 +64,7 @@ class UsuarioController extends Controller
 
         if ($usuario):
             if (Hash::check($input['clave'], $usuario->clave)):
-                $rol = Rol::where('id_rol',$usuario->id_rol);
+                $rol = Rol::where('id',$usuario->id_rol)->first();
                 Auth::login($usuario);
                 if($rol->rol == 'administrador'):
                     return redirect("admin");

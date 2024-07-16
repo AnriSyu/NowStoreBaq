@@ -54,9 +54,9 @@
                         </button>
                     </form>
                     <hr>
-                    <button type="button" class="btn nsb-btn my-4" style="width: 100%;border:1px solid #e2e2e2"><i
-                            class="fab fa-google"></i> Continuar con Google
-                    </button>
+{{--                    <button type="button" class="btn nsb-btn my-4" style="width: 100%;border:1px solid #e2e2e2"><i--}}
+{{--                            class="fab fa-google"></i> Continuar con Google--}}
+{{--                    </button>--}}
                 </div>
             </div>
         </div>

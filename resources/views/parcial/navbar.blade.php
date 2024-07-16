@@ -18,9 +18,14 @@
                 <li class="nav-item">
                     <a class="nav-link nsb-a-item" href="/">Buscar artículo</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nsb-a-item" href="/contacto">Contacto</a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link nsb-a-item" href="/contacto">Contacto</a>--}}
+{{--                </li>--}}
+                @if(Route::is('catalogo'))
+                    <li class="nav-item">
+                        <a id="a_menu_categoria" class="nav-link nsb-a-item nsb-a-item-c">Categorías</a>
+                    </li>
+                @endif
             </ul>
             <div class="d-flex" style="margin-left: auto">
                 <ul class="nav">
@@ -40,6 +45,9 @@
         </div>
     </div>
 </nav>
+@if(Route::is('catalogo'))
+    @include('parcial.categorias_articulos')
+@endif
 <script>
     (function() {
 

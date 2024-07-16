@@ -18,11 +18,20 @@ return new class extends Migration
             $table->timestamps();
         });
         DB::table('roles')->insert([
-            'id' => 1,
-            'rol' => 'cliente',
-            'descripcion' => 'Rol predeterminado de usuarios',
-            'created_at' => now(),
-            'updated_at' => now()
+            [
+                'id' => 1,
+                'rol' => 'cliente',
+                'descripcion' => 'Rol predeterminado de usuarios',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id' => 2,
+                'rol' => 'administrador',
+                'descripcion' => 'Rol con permisos administrativos, toda la aplicación',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ]);
     }
 

@@ -1,0 +1,198 @@
+@import url('Object.css');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+
+.nsb-a-item-c{
+    cursor: pointer;
+}
+
+.nsb-sidebar-categoria {
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: #fcfcfc;
+    color: white;
+    overflow-x: hidden;
+}
+.nsb-item-a-categoria {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    border-bottom: 1px solid #e5e5e5;
+}
+.nsb-item-a-categoria:hover {
+    background-color: #e5e5e5;
+    color:#000;
+}
+.nsb-overlay-categoria {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.5s;
+    display: none;
+}
+.nsb-overlay-categoria-activo {
+    display: block;
+    opacity: 1;
+}
+.nsb-sub-sidebar {
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 300px;
+    z-index: 99;
+    background-color: #fcfcfc;
+    color: white;
+    overflow-x: hidden;
+    padding-top:15px;
+}
+.nsb-item-a-subcategoria {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+.nsb-item-a-subcategoria:hover {
+    background-color: #e5e5e5;
+    color:#000;
+}
+
+.nsb-banner-pagocontraentrega {
+    background-color: #e056fd;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.nsb-banner-pagocontraentrega span.highlight {
+    color: yellow;
+    font-size: 1.3em;
+}
+
+.nsb-card-categoria-a {
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.nsb-card-categoria {
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.2s;
+    width: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.nsb-card-categoria img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.nsb-card-categoria p {
+    margin-top: 10px;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+.nsb-seccion-categoria{
+    padding-bottom:20px;
+    padding-left:20px;
+    padding-right:20px;
+    border-radius: 15px;
+}
+.nsb-sc-ct-1{
+    background-color: #eeeefd;
+}
+
+.nsb-sc-ct-2{
+    background-color: #ffeeef;
+}
+
+.nsb-seccion-categoria-h2{
+    font-family: "Rowdies", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    color:#000;
+    font-size:40px;
+}
+
+.nsb-card-categoria:hover {
+    transform: scale(1.05);
+}
+
+.nsb-sidebar-categoria-titulo{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color:  #e5e5e5;
+    color:#000;
+}
+
+
+
+
+@media (max-width: 600px) {
+    .nsb-card-categoria-a {
+        color: #000;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .nsb-card-categoria {
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        transition: transform 0.2s;
+        width: 100%;
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #f9f9f9;
+    }
+
+    .nsb-card-categoria img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .nsb-card-categoria p {
+        margin-top: 10px;
+        font-size: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nsb-seccion-categoria {
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 30px;
+    }
+}
+
