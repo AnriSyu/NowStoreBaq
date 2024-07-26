@@ -1,6 +1,6 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/nowstore/public_html/nowstore
+    - export DEPLOYPATH=/home/nowstore/public_html/
     - echo "Iniciando el despliegue en $DEPLOYPATH"
     - cd $DEPLOYPATH
     - /opt/cpanel/composer/bin/composer install --no-interaction --prefer-dist --optimize-autoloader
