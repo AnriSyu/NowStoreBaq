@@ -16,7 +16,7 @@ return new class extends Migration
                 'id' => 1,
                 'sub_categoria' => 'Vestidos',
                 'imagen' => 'uploads/categorias/vestidos.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAFZ-y7mj6k/vemYs0NXainjMAeuaUKPtw/view?website#2',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -25,7 +25,7 @@ return new class extends Migration
                 'id' => 2,
                 'sub_categoria' => 'Blusas',
                 'imagen' => 'uploads/categorias/blusas.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAFal1iOXwA/hAbuw87G90IWx_jgj8GUQg/view?website#2',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()

@@ -16,7 +16,7 @@
     <script src="{{asset("js/lib/bootstrap.bundle.min.js")}}"></script>
     <script src="{{asset("js/lib/all.min.js")}}"></script>
     <script src="{{asset('js/lib/jquery-3.7.1.min.js')}}"></script>
-    <script src="{{asset("js/catalogo.js")}}"></script>
+{{--    <script src="{{asset("js/catalogo.js")}}"></script>--}}
 </head>
 <body>
 @include('parcial.navbar')
@@ -28,12 +28,15 @@
         <h2 class="mb-4 pt-4 nsb-seccion-categoria-h2">Categorías</h2>
         <div class="row">
             @foreach ($categorias as $categoria)
+                @if($categoria->url_externo !== "")
                 <div class="col-6 col-md-2 text-center mb-3">
                     @php
                         $categoriaSlug = Str::slug($categoria->categoria, '-');
+                        $href = $categoria->url_externo ?: url('catalogo/' . $categoriaSlug);
                     @endphp
                     @if($categoria->categoria !== "Tendencias")
-                        <a class="nsb-card-categoria-a" href="/catalogo/{{$categoriaSlug}}">
+
+                        <a class="nsb-card-categoria-a" href="{{$href}}">
                             <div class="nsb-card-categoria">
                                 <img src="{{ asset('storage/'.$categoria->imagen) }}" alt="{{ $categoria->categoria }}">
                                 <p class="nsb-card-categoria-p">{{ $categoria->categoria }}</p>
@@ -41,6 +44,7 @@
                         </a>
                     @endif
                 </div>
+                @endif
             @endforeach
         </div>
     </div>
@@ -53,18 +57,21 @@
                     <div class="col-md-12">
                         <div class="row">
                             @foreach($categoria->subcategorias as $subcategoria)
+                                @if($subcategoria->url_externo !== "")
                                 <div class="col-6 col-md-2 text-center mb-3">
                                     @php
                                         $categoriaSlug = Str::slug($categoria->categoria, '-');
                                         $subcategoriaSlug = Str::slug($subcategoria->sub_categoria, '-');
+                                        $href = $subcategoria->url_externo ?: url('catalogo/' . $categoriaSlug . '/' . $subcategoriaSlug);
                                     @endphp
-                                    <a class="nsb-card-categoria-a" href="/catalogo/{{$categoriaSlug}}/{{$subcategoriaSlug}}">
+                                    <a class="nsb-card-categoria-a" href="{{$href}}">
                                         <div class="nsb-card-categoria">
                                             <img src="{{ asset('storage/'.$subcategoria->imagen) }}" alt="{{ $subcategoria->sub_categoria }}">
                                             <p class="nsb-card-categoria-p">{{ $subcategoria->sub_categoria }}</p>
                                         </div>
                                     </a>
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

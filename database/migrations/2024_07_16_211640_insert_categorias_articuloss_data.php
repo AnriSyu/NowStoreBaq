@@ -16,7 +16,7 @@ return new class extends Migration
                 'id' => 1,
                 'categoria' => 'Ropa de playa',
                 'imagen' => 'uploads/categorias/vestido_bano.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAFbZNON8t8/2XFKlxlfXXt-nUc6kgdARA/view?website#2',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -24,7 +24,7 @@ return new class extends Migration
                 'id' => 2,
                 'categoria' => 'Ropa deportiva',
                 'imagen' => 'uploads/categorias/ropa_deportiva.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAFiXq1Jsw4/T_DuPpd_ITSFl5OG-x7r0g/view?website#2',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -56,7 +56,7 @@ return new class extends Migration
                 'id' => 6,
                 'categoria' => 'Accesorios',
                 'imagen' => 'uploads/categorias/bolsos.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAFbIXLhnII/nfXCH_JwH4z6dMiOSSPJQQ/view?website#2',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

@@ -16,34 +16,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('principal.buscar_articulo');
-});
+//Route::get('/', function () {
+//    return view('principal.buscar_articulo');
+//});
+//
+//route::get('/carrito',function() {
+//    return view('principal.carrito_articulos');
+//});
 
-route::get('/carrito',function() {
-    return view('principal.carrito_articulos');
-});
+route::get('/',[CatalogoController::class, 'mostrarCatalogo'])->name("catalogo");
 
 route::get('/catalogo',[CatalogoController::class, 'mostrarCatalogo'])->name("catalogo");
 
-route::get('/recuperar_cuenta',function() {
-    return view('recuperacion_cuenta.recuperar_cuenta');
-});
-
-Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);
-
-
-route::get('/ingresar',[UsuarioController::class,'mostrarIngresar'])->name("login");
-
-Route::get('/perfil', [UsuarioController::class, 'mostrarPerfil'])->name('perfil')->middleware('auth:web');
-
-route::post('/rginsc', [UsuarioController::class, 'registroIniciarSesion']);
-
-route::post('/reccun', [UsuarioController::class, 'recuperarCuenta']);
-
-route::post('/cbrclv', [UsuarioController::class, 'actualizarClave']);
-
-Route::get('/verificar/{token}', [UsuarioController::class, 'verificarCuenta']);
-
-Route::get('/cambiar_clave/{token}', [UsuarioController::class, 'cambiarClave']);
+//route::get('/recuperar_cuenta',function() {
+//    return view('recuperacion_cuenta.recuperar_cuenta');
+//});
+//
+//Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);
+//
+//
+//route::get('/ingresar',[UsuarioController::class,'mostrarIngresar'])->name("login");
+//
+//Route::get('/perfil', [UsuarioController::class, 'mostrarPerfil'])->name('perfil')->middleware('auth:web');
+//
+//route::post('/rginsc', [UsuarioController::class, 'registroIniciarSesion']);
+//
+//route::post('/reccun', [UsuarioController::class, 'recuperarCuenta']);
+//
+//route::post('/cbrclv', [UsuarioController::class, 'actualizarClave']);
+//
+//Route::get('/verificar/{token}', [UsuarioController::class, 'verificarCuenta']);
+//
+//Route::get('/cambiar_clave/{token}', [UsuarioController::class, 'cambiarClave']);
 

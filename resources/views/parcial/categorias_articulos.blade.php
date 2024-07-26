@@ -6,10 +6,13 @@
         @foreach($categorias as $categoria)
             @php
                 $categoriaSlug = Str::slug($categoria->categoria, '-');
+                $href = $categoria->url_externo ?: url('catalogo/' . $categoriaSlug);
             @endphp
+            @if($categoria->url_externo !== "")
             <li class="nav-item nsb-item-sub-categoria" data-subcategoria="{{$categoria->categoria}}">
-                <a class="nav-link nsb-item-a-categoria" href="catalogo/{{$categoriaSlug}}">{{$categoria->categoria}}</a>
+                <a class="nav-link nsb-item-a-categoria" href="{{$href}}">{{$categoria->categoria}}</a>
             </li>
+            @endif
         @endforeach
     </ul>
 </div>
@@ -22,10 +25,13 @@
                     @php
                         $categoriaSlug = Str::slug($categoria->categoria, '-');
                         $subcategoriaSlug = Str::slug($subcategoria->sub_categoria, '-');
+                        $href = $subcategoria->url_externo ?: url('catalogo/' . $categoriaSlug . '/' . $subcategoriaSlug);
                     @endphp
+                    @if($subcategoria->url_externo !== "")
                     <div class="col-lg-4">
-                        <a class="nav-link nsb-item-a-subcategoria" href="catalogo/{{$categoriaSlug}}/{{$subcategoriaSlug}}">{{$subcategoria->sub_categoria}}</a>
+                        <a class="nav-link nsb-item-a-subcategoria" href="{{$href}}">{{$subcategoria->sub_categoria}}</a>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>
