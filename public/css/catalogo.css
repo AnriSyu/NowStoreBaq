@@ -90,7 +90,7 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     transition: transform 0.2s;
-    width: 200px;
+    width: 190px;
     height: 250px;
     display: flex;
     flex-direction: column;
@@ -109,16 +109,15 @@
 .nsb-card-categoria p {
     margin-top: 10px;
     font-size: 20px;
-    white-space: nowrap;
     overflow: hidden;
     width: 100%;
     text-align: center;
 }
 
-.nsb-seccion-categoria{
-    padding-bottom:20px;
-    padding-left:20px;
-    padding-right:20px;
+.nsb-seccion-categoria {
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     border-radius: 15px;
 }
 .nsb-sc-ct-1{
@@ -170,6 +169,7 @@
         justify-content: center;
         align-items: center;
         background-color: #f9f9f9;
+        padding: 5px;
     }
 
     .nsb-card-categoria img {
@@ -182,10 +182,14 @@
     .nsb-card-categoria p {
         margin-top: 10px;
         font-size: 20px;
-        white-space: nowrap;
         overflow: hidden;
         width: 100%;
         text-align: center;
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+        overflow-wrap: break-word;
+        hyphens: auto;
     }
 
     .nsb-seccion-categoria {

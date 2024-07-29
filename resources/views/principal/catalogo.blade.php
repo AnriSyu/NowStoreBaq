@@ -29,21 +29,20 @@
         <div class="row">
             @foreach ($categorias as $categoria)
                 @if($categoria->url_externo !== "")
-                <div class="col-6 col-md-2 text-center mb-3">
                     @php
                         $categoriaSlug = Str::slug($categoria->categoria, '-');
                         $href = $categoria->url_externo ?: url('catalogo/' . $categoriaSlug);
                     @endphp
                     @if($categoria->categoria !== "Tendencias")
-
-                        <a class="nsb-card-categoria-a" href="{{$href}}">
-                            <div class="nsb-card-categoria">
-                                <img src="{{ asset('storage/'.$categoria->imagen) }}" alt="{{ $categoria->categoria }}">
-                                <p class="nsb-card-categoria-p">{{ $categoria->categoria }}</p>
-                            </div>
-                        </a>
+                        <div class="col-6 col-md-4 col-lg-2 text-center mb-3">
+                            <a class="nsb-card-categoria-a" href="{{$href}}" target="_blank">
+                                <div class="nsb-card-categoria">
+                                    <img src="{{ asset('storage/'.$categoria->imagen) }}" alt="{{ $categoria->categoria }}">
+                                    <p class="nsb-card-categoria-p">{{ $categoria->categoria }}</p>
+                                </div>
+                            </a>
+                        </div>
                     @endif
-                </div>
                 @endif
             @endforeach
         </div>
@@ -54,23 +53,23 @@
         <div class="row">
             @foreach ($categorias as $categoria)
                 @if($categoria->subcategorias->isNotEmpty())
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="row">
                             @foreach($categoria->subcategorias as $subcategoria)
                                 @if($subcategoria->url_externo !== "")
-                                <div class="col-6 col-md-2 text-center mb-3">
-                                    @php
-                                        $categoriaSlug = Str::slug($categoria->categoria, '-');
-                                        $subcategoriaSlug = Str::slug($subcategoria->sub_categoria, '-');
-                                        $href = $subcategoria->url_externo ?: url('catalogo/' . $categoriaSlug . '/' . $subcategoriaSlug);
-                                    @endphp
-                                    <a class="nsb-card-categoria-a" href="{{$href}}">
-                                        <div class="nsb-card-categoria">
-                                            <img src="{{ asset('storage/'.$subcategoria->imagen) }}" alt="{{ $subcategoria->sub_categoria }}">
-                                            <p class="nsb-card-categoria-p">{{ $subcategoria->sub_categoria }}</p>
-                                        </div>
-                                    </a>
-                                </div>
+                                    <div class="col-6 col-md-4 col-lg-2 text-center mb-3">
+                                        @php
+                                            $categoriaSlug = Str::slug($categoria->categoria, '-');
+                                            $subcategoriaSlug = Str::slug($subcategoria->sub_categoria, '-');
+                                            $href = $subcategoria->url_externo ?: url('catalogo/' . $categoriaSlug . '/' . $subcategoriaSlug);
+                                        @endphp
+                                        <a class="nsb-card-categoria-a" href="{{$href}}" target="_blank">
+                                            <div class="nsb-card-categoria">
+                                                <img src="{{ asset('storage/'.$subcategoria->imagen) }}" alt="{{ $subcategoria->sub_categoria }}">
+                                                <p class="nsb-card-categoria-p">{{ $subcategoria->sub_categoria }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
                                 @endif
                             @endforeach
                         </div>

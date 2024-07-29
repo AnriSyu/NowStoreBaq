@@ -32,7 +32,7 @@ return new class extends Migration
                 'id' => 3,
                 'categoria' => 'Ropa Curvy Plus',
                 'imagen' => 'uploads/categorias/curvy_plus.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAF-MUMRZGs/4k1hTiYaLd05r8I1PEnzVQ/view',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -40,7 +40,7 @@ return new class extends Migration
                 'id' => 4,
                 'categoria' => 'Lencería',
                 'imagen' => 'uploads/categorias/lenceria.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAGMEu-J0wI/cUvSYR9LzlT-iHApgmGEPg/view',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -48,7 +48,7 @@ return new class extends Migration
                 'id' => 5,
                 'categoria' => 'Pijamas',
                 'imagen' => 'uploads/categorias/pijamas.jpg',
-                'url_externo'=> '',
+                'url_externo'=> 'https://www.canva.com/design/DAGMEr15_xg/V3GatwlDhhCBy9PuATlJCQ/view',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

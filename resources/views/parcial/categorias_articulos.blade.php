@@ -6,9 +6,12 @@
         @foreach($categorias as $categoria)
             @php
                 $categoriaSlug = Str::slug($categoria->categoria, '-');
-                $href = $categoria->url_externo ?: url('catalogo/' . $categoriaSlug);
+                $href = '';
+                if($categoria->categoria !== 'Tendencias'):
+                    $href = $categoria->url_externo ?: url('catalogo/' . $categoriaSlug);
+                endif;
             @endphp
-            @if($categoria->url_externo !== "")
+            @if( $categoria->categoria === "Tendencias" || $categoria->url_externo !== "")
             <li class="nav-item nsb-item-sub-categoria" data-subcategoria="{{$categoria->categoria}}">
                 <a class="nav-link nsb-item-a-categoria" href="{{$href}}">{{$categoria->categoria}}</a>
             </li>

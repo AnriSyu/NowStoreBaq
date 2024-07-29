@@ -1,16 +1,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/nowstore/public_html/
-    - echo "Iniciando el despliegue en $DEPLOYPATH"
-    - cd $DEPLOYPATH
-    - /opt/cpanel/composer/bin/composer install --no-interaction --prefer-dist --optimize-autoloader
-    - cp .env.example .env
-    - php artisan key:generate
-    - php artisan migrate --force
-    - php artisan config:cache
-    - php artisan route:cache
-    - php artisan view:cache
-    - chown -R nowstore:nowstore $DEPLOYPATH
-    - chmod -R 775 $DEPLOYPATH/storage
-    - chmod -R 775 $DEPLOYPATH/bootstrap/cache
-    - echo "Despliegue completado"
+    - /bin/rsync -av public/ $DEPLOYPATH
