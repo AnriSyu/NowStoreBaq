@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/nowstore/public_html/
+    - export DEPLOYPATH=/home/nowstore/testing/
     - /bin/rsync -av public/ $DEPLOYPATH

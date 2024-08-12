@@ -20,19 +20,23 @@ use Illuminate\Support\Facades\Route;
 //    return view('principal.buscar_articulo');
 //});
 //
-//route::get('/carrito',function() {
-//    return view('principal.carrito_articulos');
-//});
+route::get('/carrito',function() {
+    return view('principal.carrito_articulos');
+});
 
-route::get('/',[CatalogoController::class, 'mostrarCatalogo'])->name("catalogo");
-
-route::get('/catalogo',[CatalogoController::class, 'mostrarCatalogo'])->name("catalogo");
+Route::get('/', function () {
+    return view('principal.buscar_articulo');
+});
 
 //route::get('/recuperar_cuenta',function() {
 //    return view('recuperacion_cuenta.recuperar_cuenta');
 //});
-//
-//Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);
+
+
+route::get('/catalogo',[CatalogoController::class, 'mostrarCatalogo'])->name("catalogo");
+
+
+Route::post('/articulo', [ArticuloController::class, 'buscarArticuloScrapper']);
 //
 //
 //route::get('/ingresar',[UsuarioController::class,'mostrarIngresar'])->name("login");

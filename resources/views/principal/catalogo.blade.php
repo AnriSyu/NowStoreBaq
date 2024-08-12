@@ -23,8 +23,8 @@
 <div class="nsb-banner-pagocontraentrega">
     <span>PAGO <span class="highlight">CONTRAENTREGA</span></span>
 </div>
-<div class="container">
-    <div class="my-3 nsb-seccion-categoria nsb-sc-ct-1">
+<div class="container-fluid nsb-container-categorias">
+    <div class="my-3 nsb-seccion-categoria nsb-sc-ct-1 text-center">
         <h2 class="mb-4 pt-4 nsb-seccion-categoria-h2">Categorías</h2>
         <div class="row">
             @foreach ($categorias as $categoria)
@@ -32,9 +32,10 @@
                     @php
                         $categoriaSlug = Str::slug($categoria->categoria, '-');
                         $href = $categoria->url_externo ?: url('catalogo/' . $categoriaSlug);
+//                        $href =  url('catalogo/' . $categoria->url_interno);
                     @endphp
                     @if($categoria->categoria !== "Tendencias")
-                        <div class="col-6 col-md-4 col-lg-2 text-center mb-3">
+                        <div class="col mb-4">
                             <a class="nsb-card-categoria-a" href="{{$href}}" target="_blank">
                                 <div class="nsb-card-categoria">
                                     <img src="{{ asset('storage/'.$categoria->imagen) }}" alt="{{ $categoria->categoria }}">
@@ -48,7 +49,7 @@
         </div>
     </div>
 
-    <div class="mt-5 mb-3 nsb-seccion-categoria nsb-sc-ct-2">
+    <div class="mt-5 mb-3 nsb-seccion-categoria nsb-sc-ct-2 text-center">
         <h2 class="mb-4 pt-4 nsb-seccion-categoria-h2">Tendencias</h2>
         <div class="row">
             @foreach ($categorias as $categoria)
@@ -57,11 +58,12 @@
                         <div class="row">
                             @foreach($categoria->subcategorias as $subcategoria)
                                 @if($subcategoria->url_externo !== "")
-                                    <div class="col-6 col-md-4 col-lg-2 text-center mb-3">
+                                    <div class="col mb-4">
                                         @php
                                             $categoriaSlug = Str::slug($categoria->categoria, '-');
                                             $subcategoriaSlug = Str::slug($subcategoria->sub_categoria, '-');
                                             $href = $subcategoria->url_externo ?: url('catalogo/' . $categoriaSlug . '/' . $subcategoriaSlug);
+//                                             $href = url('catalogo/' . $categoria->url_interno . '/' . $subcategoria->url_interno);
                                         @endphp
                                         <a class="nsb-card-categoria-a" href="{{$href}}" target="_blank">
                                             <div class="nsb-card-categoria">
