@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
@@ -53,9 +52,35 @@ class ArticuloController extends Controller
         $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
         $url = addslashes($url);
 
-        $api = env('API_URL_SHEIN_SCRAPPER');
+        $endpointCrawlbase = env('ENDPOINT_URL_SCRAPER_CRAWLBASE');
+        $endpointScraperApi = env('ENDPOINT_URL_SCRAPER_SCRAPERAPI');
 
-        $urlCompleta = $api . $url;
+        $urlCompleta = $endpointScraperApi . $url;
+        $tipoUrl = "web";
+
+        if (str_contains($url, 'api-shein.shein.com')):
+            $tipoUrl = "api";
+        endif;
+
+        if($tipoUrl == "api"):
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            if(preg_match('/var shareInfo = (\{.*?\});/s', $response, $matches)):
+
+                $json = $matches[1];
+                $data = json_decode($json, true);
+                $tituloArticulo = str_replace(' ', '', $data['shareTitle']);
+                $idArticulo = $data['shareId'];
+                $catIdArticulo = $data['cat_id'];
+
+                $urlFinal = 'https://shein.com.co/'.$tituloArticulo . '-p-' . $idArticulo . '-cat-' . $catIdArticulo . '.html';
+                $urlCompleta = $endpointCrawlbase . $urlFinal;
+
+            endif;
+        endif;
 
         try {
 
@@ -65,8 +90,6 @@ class ArticuloController extends Controller
             $data = curl_exec($ch);
             curl_close($ch);
             $crawler = new Crawler($data);
-
-
             $articulo['nombre'] = $crawler->filter('.product-intro__head-name.fsp-element')->text();
             $articulo['sku'] = $crawler->filter('.product-intro__head-sku')->text();
             $articulo['sku'] = trim(str_replace('SKU:','',$articulo['sku']));
@@ -116,8 +139,7 @@ class ArticuloController extends Controller
             });
 
             if (str_contains($scriptContent, "window.gbRawData")):
-                if (preg_match('/window\.gbRawData\s*=\s*(\{.*?});/s', $scriptContent, $matches)):
-
+                if (preg_match('/window\.gbRawData\s*=\s*(\{.*\});/s', $scriptContent, $matches)):
                     $jsonCleaned = strstr($matches[1], 'document.dispatchEvent', true);
                     $jsonCleaned = rtrim($jsonCleaned, ',');
                     $jsonCleaned = preg_replace('/<[^>]*>/', '', $jsonCleaned);
@@ -230,6 +252,8 @@ class ArticuloController extends Controller
 //            $fitValue = $node->filter('.common-reviews__progress+span')->text();
 //            return ['fitName' => $fitName, 'fitValue' => $fitValue];
 //        });
+
+        $articulo["tipo_url"] = $tipoUrl;
 
         return view('principal.mostrar_articulo', ['articulo' => $articulo]);
     }
