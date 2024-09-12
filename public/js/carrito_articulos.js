@@ -46,6 +46,37 @@ $(function () {
 
     $("#button_pagar").click(function(){
         const articulos_pagar = carrito.filter((item, index) => $("#checkbox" + index).is(":checked"));
+        localStorage.setItem("articulos_pagar",JSON.stringify(articulos_pagar));
+        //acc es el articulo completo el json
+        //item es el valor de la propiedad
+        let total = 0;
+        let descuento = 0;
+        articulos_pagar.forEach((acc,item)=>{
+            total += (acc.precio_venta * acc.cantidad);
+            if (acc.descuento !== undefined && acc.descuento !== "0") {
+                let descuentoDinero = (acc.precio_original * acc.descuento / 100) * acc.cantidad;
+                descuento += descuentoDinero;
+            }
+        })
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"/genpedido",
+            data: {
+                articulos_pagar:JSON.stringify(articulos_pagar),
+                total:total,
+                descuento:descuento
+            },
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(response){
+            window.location.href = response.url_redirect;
+        }).fail(function(response){
+            if(response.status === 401) {
+                window.location.href = response.responseJSON.url_redirect;
+            }
+        });
     })
 
 })

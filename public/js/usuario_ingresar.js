@@ -45,25 +45,34 @@ $(function(){
             }
         }).done(function(response){
             $('#span_error').html("");
-            if(response.estado === "ok") {
-                if(response.tipo==="registro"){
+            if(response.estado === 'ok') {
+                if(response.tipo === 'login') {
+                    if (window.location.search.includes('?frompage=carrito')) {
+                        window.location.href = "/pagar?frompage=login";
+                    }else{
+                        window.location.href = "/perfil";
+                    }
+                } else if(response.tipo === 'registro') {
                     Swal.fire({
                         title: "Registro exitoso",
                         text: "Entra en tu correo para verificar tu cuenta",
                         icon: "success"
                     });
-                }else{
-                    window.location.href = '/perfil';
                 }
             }
         }).fail(function(response){
             const spanError = $('#span_error');
             spanError.empty();
-            $.each(response.responseJSON.mensaje, function(campo, mensajes) {
-                $.each(mensajes, function(indice, mensaje) {
-                    spanError.append('<p>' + mensaje + '</p>');
+            if(response.status === 422) {
+                const errors = response.responseJSON.mensaje;
+                $.each(errors, function(key, value) {
+                    spanError.append('<p>' + value[0] + '</p>');
                 });
-            });
+            } else if(response.status === 401) {
+                spanError.append('<p>' + response.responseJSON.mensaje + '</p>');
+            } else {
+                spanError.append('<p>Ocurrió un error inesperado. Por favor, inténtalo de nuevo.</p>');
+            }
         })
 
     })

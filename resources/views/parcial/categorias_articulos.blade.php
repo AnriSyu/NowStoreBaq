@@ -13,7 +13,7 @@
             @endphp
             @if( $categoria->categoria === "Tendencias" || $categoria->url_externo !== "")
             <li class="nav-item nsb-item-sub-categoria" data-subcategoria="{{$categoria->categoria}}">
-                <a class="nav-link nsb-item-a-categoria" href="{{$href}}">{{$categoria->categoria}}</a>
+                <a class="nav-link nsb-item-a-categoria" @if($href!=='')href="{{$href}} @endif">{{$categoria->categoria}}</a>
             </li>
             @endif
         @endforeach
@@ -43,7 +43,7 @@
 
 <script>
     let menuCerrado = true
-    $("#a_menu_categoria").on("click",function(){
+    $(document).on("click","#a_menu_categoria",function(){
         if(menuCerrado === true) {
             $("#sidebar_categoria").css("width","300px")
             $("#overlay_sidebar").addClass("nsb-overlay-categoria-activo")

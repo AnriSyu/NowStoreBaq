@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -14,10 +16,9 @@ class ArticuloController extends Controller
     public function buscarArticuloScrapper(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'input_url_articulo' => 'required|url',
+            'input_url_articulo' => 'required',
         ], [
             'input_url_articulo.required' => 'El campo es obligatorio.',
-            'input_url_articulo.url' => 'El campo debe ser un enlace válido.',
         ]);
 
         if ($validator->fails()):
@@ -28,25 +29,31 @@ class ArticuloController extends Controller
 
         $url = $request->input('input_url_articulo');
 
+        if (preg_match('/(https?:\/\/[^\s]+)/', $url, $matches)):
+            $url = $matches[0];
+        endif;
+
+
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
         $urlParsed = parse_url($url);
 
         $host = $urlParsed['host'] ?? '';
 
-        if (!str_contains($host, 'shein.com')):
-            return back()->withErrors(['input_url_articulo' => 'El enlace debe ser de shein.com.'])->withInput();
-        endif;
-
         $hostsRegistrados = [
-            'es.shein.com' => 'shein.com.co',
-            'm.shein.com.co' => 'shein.com.co',
+            '.shein.com' => 'shein.com.co',
+            '.shein.com.co' => 'shein.com.co',
         ];
 
-        if (array_key_exists($host, $hostsRegistrados)) {
+        $url = preg_replace('/\w+\.shein\.com/', 'shein.com.co', $url);
+        $url = preg_replace('/\w+\.shein\.com\.co/', 'shein.com.co', $url);
+
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (array_key_exists($host, $hostsRegistrados)):
             $newHost = $hostsRegistrados[$host];
             $url = str_replace($host, $newHost, $url);
-        }
+        endif;
 
 
         $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
@@ -55,14 +62,21 @@ class ArticuloController extends Controller
         $endpointCrawlbase = env('ENDPOINT_URL_SCRAPER_CRAWLBASE');
         $endpointScraperApi = env('ENDPOINT_URL_SCRAPER_SCRAPERAPI');
 
-        $urlCompleta = $endpointScraperApi . $url;
+        $urlCompleta = $endpointCrawlbase . $url;
         $tipoUrl = "web";
 
         if (str_contains($url, 'api-shein.shein.com')):
             $tipoUrl = "api";
         endif;
 
+
+        if (!str_contains($host, 'shein.com')):
+            return back()->withErrors(['input_url_articulo' => 'El enlace debe ser de shein.com.'])->withInput();
+        endif;
+
+
         if($tipoUrl == "api"):
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -241,6 +255,7 @@ class ArticuloController extends Controller
             endif;
         }catch (\Exception $e) {
             $errorDetails = $e->getMessage();
+//            //TODO guardar error en la base de datos
             return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
         }
 
@@ -258,7 +273,54 @@ class ArticuloController extends Controller
         return view('principal.mostrar_articulo', ['articulo' => $articulo]);
     }
 
+    public function generarPedido(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'articulos_pagar' => 'required',
+        ], [
+            'articulos_pagar.required' => 'Debe seleccionar al menos un artículo para pagar.',
+        ]);
 
+        if ($validator->fails()):
+            return back()->withErrors($validator)->withInput();
+        endif;
+
+        $articulos_pagar = $request->input('articulos_pagar');
+        session(['carrito' => $articulos_pagar]);
+
+        session(['total' => $request->input('total')]);
+        session(['descuento' => $request->input('descuento')]);
+
+        if (!Auth::check()) {
+            return response()->json([
+                'estado' => 'error',
+                'mensaje' => 'Por favor, inicie sesión para continuar.',
+                'detalle' => 'nosesion',
+                'url_redirect' => route('login') . '?frompage=carrito'
+            ], 401);
+        }
+
+        $usuario = Auth::user();
+
+        $persona = Persona::where('id_usuario', $usuario->id)->first();
+
+        if (!$persona) {
+
+            return response()->json([
+                'estado' => 'error',
+                'mensaje' => 'Debe registrarse como persona para continuar.',
+                'detalle' => 'noregistrado',
+                'url_redirect' => route('pagar') . '?frompage=carrito'
+            ]);
+        }
+
+        return response()->json([
+            'estado' => 'ok',
+            'mensaje' => 'Proceda a ingresar el pago.',
+            'detalle' => 'pagar',
+            'url_redirect' => route('pagar')
+        ]);
+    }
 
 }
 

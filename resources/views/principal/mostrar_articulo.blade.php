@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title id="title_title">NowStoreBaq - {{$articulo['nombre']}}</title>
+    <title id="title_title">NowStoreCol - {{$articulo['nombre']}}</title>
     <link rel="icon" type="image/png" href="{{asset('img/nowstorebaq_logo.png')}}">
     <link rel="stylesheet" href="{{asset('css/lib/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/lib/all.min.css')}}">
@@ -86,7 +86,7 @@
                     <strong id="strong_titulo_talla">{{$articulo['titulo_talla']}}:</strong>
                     <small id="error_seleccionar_talla" style="color:red"></small>
                 </p>
-                <div class="nsb-tallas d-flex">
+                <div class="nsb-tallas d-flex flex-wrap">
                     @foreach($articulo['tallas'] as $talla)
                         <button class="btn nsb-btn-talla @if(count($articulo['tallas']) === 1) nsb-selected @endif"
                                 data-talla="{{$talla}}">{{$talla}}</button>

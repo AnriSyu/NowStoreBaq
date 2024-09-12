@@ -1,0 +1,53 @@
+@import url("Object.css");
+@import url("partials/select2.css");
+
+body {
+    background-color:#f4f4f4;
+}
+
+.nsb-card-body{
+    margin-top:15px;
+    margin-bottom: 5px;
+}
+
+.nsb-btn-guardar-datos-persona{
+    background-color: var(--nsb-elegant-black);
+    color: #fff;
+    width: 300px;
+}
+
+.nsb-btn-guardar-datos-persona:hover{
+    background-color: #273746;
+    color: #fff;
+}
+
+.nsb-btn-guardar-datos-persona:active{
+    background-color: #424649!important;
+    color: #fff!important;
+}
+
+.nsb-btn-pagar{
+    background-color: var(--nsb-first-color);
+    color: #fff;
+}
+
+.nsb-btn-pagar:hover{
+    background-color: var(--nsb-first-color-darker);
+    color: #fff;
+}
+
+.nsb-btn-pagar:active{
+    background-color: var(--nsb-first-color-darker)!important;
+    color: #fff!important;
+}
+
+
+.nsb-mensaje-volver-carrito{
+    background-color:#c8e6c9;
+    color:#1b5e20;
+    padding:10px;
+    border-radius:5px;
+    margin-top:10px;
+    margin-bottom:20px;
+    border:1px solid #81c784;
+}

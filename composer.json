@@ -8,6 +8,7 @@
         "php": "^8.1",
         "ext-curl": "*",
         "ext-pdo": "*",
+        "butschster/meta-tags": "^3.1",
         "defuse/php-encryption": "^2.4",
         "fabpot/goutte": "^4.0",
         "guzzlehttp/guzzle": "^7.2",

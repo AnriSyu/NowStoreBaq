@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-4">
-                <h3 class="nsb-footer-titulo">NowStoreBaq</h3>
-                <p class="nsb-footer-parrafo">NowStoreBaq es una plataforma que te ayuda a encontrar los artículos que deseas comprar en Shein</p>
+                <h3 class="nsb-footer-titulo">NowStoreCol</h3>
+                <p class="nsb-footer-parrafo">NowStoreCol es una plataforma que te ayuda a encontrar los artículos que deseas comprar en Shein</p>
             </div>
 {{--            <div class="col-lg-4">--}}
 {{--                <h3 class="nsb-footer-titulo">Enlaces</h3>--}}

@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>NowStoreBaq</title>
+    <title>NowStoreCol - Recuperar cuenta</title>
     <link rel="icon" type="image/png" href="{{asset('img/nowstorebaq_logo.png')}}">
     <link rel="stylesheet" href="{{asset('css/lib/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/lib/all.min.css')}}">
@@ -26,7 +26,7 @@
 @include('parcial.navbar')
 <main class="container">
     <div class="row justify-content-center my-5">
-        <div class="col-lg-6">
+        <div class="col-lg-6 my-2">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">Recuperar cuenta</h3>

@@ -33,6 +33,12 @@ class UsuarioController extends Controller
         return view("usuario.usuario_ingresar");
     }
 
+    public function cerrarSesion()
+    {
+        Auth::logout();
+        return redirect("/");
+    }
+
     public function registroIniciarSesion(Request $request): JsonResponse | RedirectResponse
     {
 
@@ -66,20 +72,25 @@ class UsuarioController extends Controller
             if (Hash::check($input['clave'], $usuario->clave)):
                 $rol = Rol::where('id',$usuario->id_rol)->first();
                 Auth::login($usuario);
+
                 if($rol->rol == 'administrador'):
                     return redirect("admin");
                 endif;
+
                 return response()->json([
                     'estado' => 'ok',
                     'mensaje' => 'Login exitoso',
                     "tipo"=>"login"
                 ], 201);
+
             else:
+
                 return response()->json([
                     'estado' => 'error',
-                    'mensaje' => 'La contraseña es incorrecta.',
+                    'mensaje' => 'Correo o clave incorrectos.',
                     "tipo"=>"login"
                 ], 401);
+
             endif;
         endif;
 

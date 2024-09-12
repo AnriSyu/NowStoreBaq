@@ -149,7 +149,14 @@
     margin:auto;
 }
 
-
+.nsb-categoria-nav-link{
+    color:#000;
+}
+.nsb-categoria-nav-link:hover{
+    font-weight: bolder;
+    color:#000;
+    cursor:pointer;
+}
 
 @media (max-width: 600px) {
     .nsb-container-categorias{

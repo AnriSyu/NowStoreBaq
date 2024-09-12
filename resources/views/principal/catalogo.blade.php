@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title id="title_title">NowStoreBaq - Catálogo</title>
+    <title id="title_title">NowStoreCol - Catálogo</title>
     <link rel="icon" type="image/png" href="{{asset('img/nowstorebaq_logo.png')}}">
     <link rel="stylesheet" href="{{asset('css/lib/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/lib/all.min.css')}}">
@@ -20,6 +20,28 @@
 </head>
 <body>
 @include('parcial.navbar')
+<div class="container-fluid d-flex align-items-center ">
+    <ul class="d-flex mb-0 nav nsb-catgeoria-nav">
+        <li class="nav-item">
+            <a id="a_menu_categoria" class="nav-link nsb-a-item-c nsb-categoria-nav-link"><small>Categorías</small></a>
+        </li>
+        @foreach ($categorias as $categoria)
+            @php
+                $categoriaSlug = Str::slug($categoria->categoria, '-');
+                $href = $categoria->url_externo ?: url('catalogo/' . $categoriaSlug);
+            @endphp
+            @if($categoria->categoria !== 'Tendencias')
+                <li class="nav-item">
+                    <a class="nav-link nsb-categoria-nav-link" href="{{$href}}"><small>{{$categoria->categoria}}</small></a>
+                </li>
+            @endif
+        @endforeach
+    </ul>
+{{--    <div class="d-flex align-items-center">--}}
+{{--        <span id="span_categoria_flecha_izquierda" class="nsb-categoria-nav-link"><i class="fas fa-chevron-left me-4"></i></span>--}}
+{{--        <span id="span_categoria_flecha_derecha" class="nsb-categoria-nav-link"><i class="fas fa-chevron-right ms-2"></i></span>--}}
+{{--    </div>--}}
+</div>
 <div class="nsb-banner-pagocontraentrega">
     <span>PAGO <span class="highlight">CONTRAENTREGA</span></span>
 </div>

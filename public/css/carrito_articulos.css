@@ -1,12 +1,8 @@
 @import url('Object.css');
-@import url('p/checkbox.css');
+@import url('partials/checkbox.css');
 
 body {
     background-color:#f4f4f4;
-}
-
-.nsb-activo {
-    color:var(--nsb-first-color);
 }
 
 .nsb-card-body{
@@ -20,7 +16,7 @@ body {
     border-bottom: 1px solid #ddd;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 1000;
+    z-index: 1;
 
 }
 
@@ -69,7 +65,9 @@ body {
 }
 
 .nsb-resumen-descuento{
-    color:var(--nsb-second-color-darker);
+    color:var(--nsb-first-color-darker);
+    font-weight: bolder;
+    font-size:1.5em;
 }
 
 @media (max-width: 600px) {

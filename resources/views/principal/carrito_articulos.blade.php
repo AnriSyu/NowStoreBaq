@@ -5,7 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title id="title_title">NowStoreBaq - Carrito</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title id="title_title">NowStoreCol - Carrito</title>
     <link rel="icon" type="image/png" href="{{asset('img/nowstorebaq_logo.png')}}">
     <link rel="stylesheet" href="{{asset('css/lib/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/lib/all.min.css')}}">
@@ -25,7 +26,7 @@
     <div class="text-center">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="nsb-activo">Carrito</a></li>
+                <li class="breadcrumb-item"><span class="nsb-activo">Carrito</span> > <span> Pagar </span> </li>
             </ol>
         </nav>
     </div>
@@ -57,10 +58,7 @@
                         <span class="nsb-resumen-precio" id="span_resumen_precio"></span>
                         <p class="nsb-resumen-descuento" id="p_resumen_descuento"></p>
                     </div>
-                    <button id="button_pagar" type="button" class="mt-3 btn nsb-btn nsb-btn-primario"
-                            style="width: 100%;font-size:2em">GENERAR PEDIDO <span class="span_cantidad_articulos"
-                                                                                   id="span_cantidad_articulos_pagar"></span>
-                    </button>
+                    <button id="button_pagar" type="button" class="mt-3 btn nsb-btn nsb-btn-primario" style="width: 100%;font-size:2em">GENERAR PEDIDO <span class="span_cantidad_articulos" id="span_cantidad_articulos_pagar"></span></button>
                 </div>
             </div>
         </div>
