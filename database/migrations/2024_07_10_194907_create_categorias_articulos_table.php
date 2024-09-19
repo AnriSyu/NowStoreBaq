@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('categoria')->unique();
             $table->text('descripcion')->nullable();
+            $table->string('estado_registro')->default('activo');
             $table->timestamps();
         });
     }

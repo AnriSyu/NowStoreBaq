@@ -16,7 +16,7 @@ return new class extends Migration
                 'id' => 1,
                 'sub_categoria' => 'Vestidos',
                 'imagen' => 'uploads/categorias/vestidos.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAFZ-y7mj6k/vemYs0NXainjMAeuaUKPtw/view?website#2',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/vestidos',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -25,7 +25,7 @@ return new class extends Migration
                 'id' => 2,
                 'sub_categoria' => 'Blusas',
                 'imagen' => 'uploads/categorias/blusas.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAFal1iOXwA/hAbuw87G90IWx_jgj8GUQg/view?website#2',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/blusas',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -34,7 +34,7 @@ return new class extends Migration
                 'id' => 3,
                 'sub_categoria' => 'Faldas',
                 'imagen' => 'uploads/categorias/faldas.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAGME-rLAaA/nWeq4n4dtFxZ_bnme0KlFQ/view',
+                'url_externo'=> 'ttps://nowstorecol.my.canva.site/faldas',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -43,7 +43,7 @@ return new class extends Migration
                 'id' => 4,
                 'sub_categoria' => 'Pantalones y Shorts',
                 'imagen' => 'uploads/categorias/pantalones.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAFczM12uzk/zuSQfLOTHx__NzBahochSw/view',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/pantalones',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -52,7 +52,7 @@ return new class extends Migration
                 'id' => 5,
                 'sub_categoria' => 'Monos',
                 'imagen' => 'uploads/categorias/monos.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAGME7fOVgQ/VZl30D9OhYtp-dChmyIHpA/view',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/monos',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -61,7 +61,7 @@ return new class extends Migration
                 'id' => 6,
                 'sub_categoria' => 'Conjuntos',
                 'imagen' => 'uploads/categorias/conjuntos.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAGMEzl4LgI/esSK6hUtUrCJAgrFZLMf-w/view',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/conjuntos',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()

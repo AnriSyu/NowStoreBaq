@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('esta_verificado')->default(false);
             $table->timestamp('fecha_verificacion')->nullable();
             $table->timestamp('fecha_expiracion_verificacion')->nullable();
+            $table->string('estado_registro')->default('activo');
             $table->timestamps();
         });
     }

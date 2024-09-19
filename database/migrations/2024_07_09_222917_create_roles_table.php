@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('rol')->unique();
             $table->string('descripcion')->nullable();
+            $table->string('estado_registro')->default('activo');
             $table->timestamps();
         });
         DB::table('roles')->insert([

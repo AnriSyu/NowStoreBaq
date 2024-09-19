@@ -31,6 +31,8 @@ use Eloquent;
  * @method static \Illuminate\Database\Eloquent\Builder|Categoria whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Categoria whereUrlExterno($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Categoria whereUrlInterno($value)
+ * @property string $estado_registro
+ * @method static \Illuminate\Database\Eloquent\Builder|Categoria whereEstadoRegistro($value)
  * @mixin Eloquent
  */
 class Categoria extends Model

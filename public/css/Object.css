@@ -126,6 +126,16 @@
 }
 
 
+.nsb-error{
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+.nsb-input-error {
+    border: 1px solid red;
+}
+
 
 .nsb-dropdown-menu {
     background-color: #fff;

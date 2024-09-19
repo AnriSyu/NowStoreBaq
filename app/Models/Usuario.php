@@ -41,6 +41,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereFechaUltimoCambioClave($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereIdRol($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereTokenCambioClave($value)
+ * @property string $estado_registro
+ * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereEstadoRegistro($value)
  * @mixin \Eloquent
  */
 class Usuario extends Authenticatable

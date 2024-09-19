@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 
-class ApiController extends Controller
+class MunicipioController extends Controller
 {
-    public function getMunicipios(Request $request)
+    public function getByIdDepartamento(Request $request)
     {
         $response = ["estado" => "error", "mensaje" => "No se encontraron municipios", "data" => []];
         $idDepartamento = $request->input('idDepartamento');

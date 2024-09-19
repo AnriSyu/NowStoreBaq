@@ -194,14 +194,14 @@ class UsuarioController extends Controller
         $user = Usuario::where('token_cambio_clave', $token)->first();
 
         if (!$user):
-            return view('recuperacion_cuenta.cambiar_clave', ['estado' => 'error', 'mensaje' => 'Token de cambio de clave no válido.']);
+            return view('usuario.cambiar_clave', ['estado' => 'error', 'mensaje' => 'Token de cambio de clave no válido.']);
         endif;
 
         if ($user->fecha_expiracion_cambio_clave && Carbon::parse($user->fecha_expiracion_cambio_clave)->lt(Carbon::now())):
-            return view('recuperacion_cuenta.cambiar_clave', ['estado' => 'error', 'mensaje' => 'El enlace de cambio de clave ha expirado. Por favor, solicita un nuevo enlace de cambio de clave.']);
+            return view('usuario.cambiar_clave', ['estado' => 'error', 'mensaje' => 'El enlace de cambio de clave ha expirado. Por favor, solicita un nuevo enlace de cambio de clave.']);
         endif;
 
-        return view('recuperacion_cuenta.cambiar_clave', ['estado' => 'ok', 'token' => $token]);
+        return view('usuario.cambiar_clave', ['estado' => 'ok', 'token' => $token]);
     }
 
     public function actualizarClave(Request $request)

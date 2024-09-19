@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('sub_categoria');
             $table->foreignId('id_categoria')->constrained('categorias_articulos')->onDelete('cascade');
             $table->text('descripcion')->nullable();
+            $table->string('estado_registro')->default('activo');
             $table->timestamps();
         });
     }

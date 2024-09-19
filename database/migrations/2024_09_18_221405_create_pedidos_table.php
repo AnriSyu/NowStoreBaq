@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personas', function (Blueprint $table) {
+        Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombres');
-            $table->string('apellidos');
-            $table->string('celular', 10);
-            $table->string('codigo_postal', 6);
-            $table->string('direccion');
-            $table->string('referencias')->nullable();
             $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
-            $table->foreignId('id_departamento')->constrained('departamentos')->onDelete('cascade');
-            $table->foreignId('id_municipio')->constrained('municipios')->onDelete('cascade');
+            $table->timestamp('fecha_ingreso')->useCurrent();
+            $table->timestamp('fecha_entregado')->nullable();
+            $table->enum('estado_pedido', ['a pagar', 'pendiente', 'en envio', 'entregado'])->default('pendiente');
+            $table->json('carrito');
+            $table->string('observacion')->nullable();
             $table->string('estado_registro')->default('activo');
             $table->timestamps();
         });
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('personas');
+        Schema::dropIfExists('pedidos');
     }
 };

@@ -40,20 +40,20 @@ class ArticuloController extends Controller
 
         $host = $urlParsed['host'] ?? '';
 
-        $hostsRegistrados = [
-            '.shein.com' => 'shein.com.co',
-            '.shein.com.co' => 'shein.com.co',
-        ];
-
-        $url = preg_replace('/\w+\.shein\.com/', 'shein.com.co', $url);
-        $url = preg_replace('/\w+\.shein\.com\.co/', 'shein.com.co', $url);
-
-        $host = parse_url($url, PHP_URL_HOST);
-
-        if (array_key_exists($host, $hostsRegistrados)):
-            $newHost = $hostsRegistrados[$host];
-            $url = str_replace($host, $newHost, $url);
-        endif;
+//        $hostsRegistrados = [
+//            '.shein.com' => 'shein.com.co',
+//            '.shein.com.co' => 'shein.com.co',
+//        ];
+//
+//        $url = preg_replace('/\w+\.shein\.com/', 'shein.com.co', $url);
+//        $url = preg_replace('/\w+\.shein\.com\.co/', 'shein.com.co', $url);
+//
+//        $host = parse_url($url, PHP_URL_HOST);
+//
+//        if (array_key_exists($host, $hostsRegistrados)):
+//            $newHost = $hostsRegistrados[$host];
+//            $url = str_replace($host, $newHost, $url);
+//        endif;
 
 
         $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
@@ -62,7 +62,9 @@ class ArticuloController extends Controller
         $endpointCrawlbase = env('ENDPOINT_URL_SCRAPER_CRAWLBASE');
         $endpointScraperApi = env('ENDPOINT_URL_SCRAPER_SCRAPERAPI');
 
-        $urlCompleta = $endpointCrawlbase . $url;
+        $servicio = $endpointCrawlbase;
+
+        $urlCompleta = $servicio . $url;
         $tipoUrl = "web";
 
         if (str_contains($url, 'api-shein.shein.com')):
@@ -91,11 +93,10 @@ class ArticuloController extends Controller
                 $catIdArticulo = $data['cat_id'];
 
                 $urlFinal = 'https://shein.com.co/'.$tituloArticulo . '-p-' . $idArticulo . '-cat-' . $catIdArticulo . '.html';
-                $urlCompleta = $endpointCrawlbase . $urlFinal;
+                $urlCompleta = $servicio . $urlFinal;
 
             endif;
         endif;
-
         try {
 
             $ch = curl_init();

@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategoria whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategoria whereUrlExterno($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubCategoria whereUrlInterno($value)
+ * @property string $estado_registro
+ * @method static \Illuminate\Database\Eloquent\Builder|SubCategoria whereEstadoRegistro($value)
  * @mixin \Eloquent
  */
 class SubCategoria extends Model

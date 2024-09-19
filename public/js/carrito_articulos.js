@@ -31,11 +31,13 @@ $(function () {
     $("#checkbox_todo").click(function(){
         let isChecked = $(this).is(':checked');
         $('.check_articulo').prop('checked', isChecked);
+        $("#button_pagar").attr("disabled", !isChecked);
         recalcularTotales();
     });
     $(document).on("click",".check_articulo",function(){
         let allChecked = $('.check_articulo:checked').length === $('.check_articulo').length;
         $('#checkbox_todo').prop('checked', allChecked);
+        $("#button_pagar").attr("disabled", $('.check_articulo:checked').length === 0);
         recalcularTotales();
     });
     $(document).on("keyup",".input_selector_cantidad",function(){

@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Rol whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Rol whereRol($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Rol whereUpdatedAt($value)
+ * @property string $estado_registro
+ * @method static \Illuminate\Database\Eloquent\Builder|Rol whereEstadoRegistro($value)
  * @mixin \Eloquent
  */
 class Rol extends Model

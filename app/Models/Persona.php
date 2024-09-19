@@ -40,6 +40,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Municipio $municipio
  * @property-read \App\Models\Usuario $usuario
  * @method static \Illuminate\Database\Eloquent\Builder|Persona whereIdMunicipio($value)
+ * @property string $estado_registro
+ * @method static \Illuminate\Database\Eloquent\Builder|Persona whereEstadoRegistro($value)
  * @mixin \Eloquent
  */
 class Persona extends Model
@@ -57,7 +59,7 @@ class Persona extends Model
         'referencias',
         'id_usuario',
         'id_departamento',
-        'id_ciudad'
+        'id_municipio'
     ];
 
     public function departamento()

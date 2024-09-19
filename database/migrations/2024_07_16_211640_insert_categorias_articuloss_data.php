@@ -16,7 +16,7 @@ return new class extends Migration
                 'id' => 1,
                 'categoria' => 'Ropa de playa',
                 'imagen' => 'uploads/categorias/vestido_bano.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAFbZNON8t8/2XFKlxlfXXt-nUc6kgdARA/view?website#2',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/olas-y-modas',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -24,7 +24,7 @@ return new class extends Migration
                 'id' => 2,
                 'categoria' => 'Ropa deportiva',
                 'imagen' => 'uploads/categorias/ropa_deportiva.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAFiXq1Jsw4/T_DuPpd_ITSFl5OG-x7r0g/view?website#2',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/ropa-deportiva',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -32,7 +32,7 @@ return new class extends Migration
                 'id' => 3,
                 'categoria' => 'Ropa Curvy Plus',
                 'imagen' => 'uploads/categorias/curvy_plus.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAF-MUMRZGs/4k1hTiYaLd05r8I1PEnzVQ/view',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/curvy-plus',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -40,7 +40,7 @@ return new class extends Migration
                 'id' => 4,
                 'categoria' => 'Lencería',
                 'imagen' => 'uploads/categorias/lenceria.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAGMEu-J0wI/cUvSYR9LzlT-iHApgmGEPg/view',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/lenceria',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -48,7 +48,7 @@ return new class extends Migration
                 'id' => 5,
                 'categoria' => 'Pijamas',
                 'imagen' => 'uploads/categorias/pijamas.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAGMEr15_xg/V3GatwlDhhCBy9PuATlJCQ/view',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/pijamas',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -56,7 +56,7 @@ return new class extends Migration
                 'id' => 6,
                 'categoria' => 'Accesorios',
                 'imagen' => 'uploads/categorias/bolsos.jpg',
-                'url_externo'=> 'https://www.canva.com/design/DAFbIXLhnII/nfXCH_JwH4z6dMiOSSPJQQ/view?website#2',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/bolsos',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
