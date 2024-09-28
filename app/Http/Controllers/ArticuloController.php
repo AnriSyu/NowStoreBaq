@@ -107,7 +107,7 @@ class ArticuloController extends Controller
 
 
 
-//        try {
+        try {
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlCompleta);
@@ -272,11 +272,11 @@ class ArticuloController extends Controller
 
                 endif;
             endif;
-//        }catch (\Exception $e) {
-//            $errorDetails = $e->getMessage();
-////            //TODO guardar error en la base de datos
-//            return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
-//        }
+        }catch (\Exception $e) {
+            $errorDetails = $e->getMessage();
+//            //TODO guardar error en la base de datos
+            return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
+        }
 
 
         //No se pueden obtener

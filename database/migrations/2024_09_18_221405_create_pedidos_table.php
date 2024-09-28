@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
             $table->timestamp('fecha_ingreso')->useCurrent();
             $table->timestamp('fecha_entregado')->nullable();
+            $table->timestamp('fecha_cancelado')->nullable();
             $table->enum('estado_pedido', ['a pagar', 'pendiente', 'en envio', 'entregado','cancelado'])->default('pendiente');
             $table->json('carrito');
             $table->string('observacion')->nullable();

@@ -37,4 +37,28 @@ const tmpl = {
     notificacion: (mensaje,icono='success') => {
         $.notify(mensaje, icono);
     },
+    notificacionError: (mensaje="Error") => {
+        $.notify(mensaje, 'error');
+    },
+
+    confirmarProceso: async (mensaje,icono='warning') => {
+        const result = await Swal.fire({
+            title: mensaje,
+            icon: icono,
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar'
+        });
+        return result.isConfirmed;
+    },
+
+    mostrarObservacion: (observacion) => {
+        Swal.fire({
+            title: 'Observación',
+            text: observacion,
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
 }

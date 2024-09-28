@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  *
@@ -50,13 +51,16 @@ class Pedido extends Model
         'id_usuario',
         'fecha_ingreso',
         'fecha_entregado',
+        'fecha_cancelado',
         'estado_pedido',
         'carrito',
         'observacion',
         'estado_registro',
         'total',
         'descuento',
-        'url_pedido'
+        'url_pedido',
+        'id_departamento',
+        'id_municipio',
     ];
 
     public function usuario()
@@ -67,6 +71,57 @@ class Pedido extends Model
     public function persona()
     {
         return $this->hasOneThrough(Persona::class, Usuario::class, 'id', 'id_usuario', 'id_usuario', 'id');
+    }
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class, 'id_departamento');
+    }
+
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class, 'id_municipio');
+    }
+
+    public static function getCarritoAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public static function colorEstado($estado) {
+        $color = '';
+        switch ($estado) {
+            case 'a pagar':
+                $color = 'bg-info text-white';
+                break;
+            case 'pendiente':
+                $color = 'bg-warning text-white';
+                break;
+            case 'en envio':
+                $color = 'bg-primary text-white';
+                break;
+            case 'entregado':
+                $color = 'bg-success text-white';
+                break;
+            case 'cancelado':
+                $color = 'bg-danger text-white';
+                break;
+            default:
+                $color = 'bg-secondary text-white';
+                break;
+        }
+        return $color;
+    }
+
+    public static function formatearTotal($total) {
+        return number_format($total, 2, '.', ',');
+    }
+
+    public static function formatearFecha($fecha) {
+        if(!$fecha) {
+            return '';
+        }
+        return Carbon::parse($fecha)->format('Y-m-d');
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedido;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -17,7 +18,6 @@ class PedidoController extends Controller
 
     public function mostrarPedido($url_pedido)
     {
-        //verificar que el pedido exista
 
         $pedido = Pedido::where('url_pedido', $url_pedido)->first();
 
@@ -25,7 +25,7 @@ class PedidoController extends Controller
             return redirect()->route('admin.pedidos');
         endif;
 
-        return view('admin.pedidos.pedido', compact('url_pedido'));
+        return view('admin.pedidos.pedido', compact('pedido'));
     }
 
     public function get(Request $request)
@@ -79,6 +79,7 @@ class PedidoController extends Controller
         $validatedData = $request->validate([
             'url_pedido' => 'required|exists:pedidos,url_pedido',
             'estado_pedido' => 'sometimes|string|in:a pagar,pendiente,en envio,entregado,cancelado',
+            'observacion' => 'sometimes|string|max:255',
         ]);
 
         $pedido = Pedido::where('url_pedido', $request->url_pedido)->first();
@@ -92,6 +93,62 @@ class PedidoController extends Controller
         $pedido->save();
 
         return response()->json(['message' => 'Pedido actualizado correctamente']);
+    }
+
+    public function entregar(Request $request)
+    {
+        $validatedData = $request->validate([
+            'url_pedido' => 'required|exists:pedidos,url_pedido',
+        ]);
+
+        $pedido = Pedido::where('url_pedido', $request->url_pedido)->first();
+
+        $pedido->estado_pedido = 'entregado';
+        $pedido->fecha_entregado = now();
+        $pedido->fecha_cancelado = null;
+
+        $pedido->save();
+
+        return response()->json(['message' => 'Pedido entregado correctamente']);
+    }
+
+    public function cancelar(Request $request)
+    {
+        $validatedData = $request->validate([
+            'url_pedido' => 'required|exists:pedidos,url_pedido',
+        ]);
+
+        $pedido = Pedido::where('url_pedido', $request->url_pedido)->first();
+
+        $pedido->estado_pedido = 'cancelado';
+        $pedido->fecha_cancelado = now();
+        $pedido->fecha_entregado = null;
+
+        $pedido->save();
+
+        return response()->json(['message' => 'Pedido cancelado correctamente']);
+    }
+
+    public function cambiarEstado(Request $request)
+    {
+        $validatedData = $request->validate([
+            'url_pedido' => 'required|exists:pedidos,url_pedido',
+            'estado_pedido' => 'required|string|in:a pagar,pendiente,en envio,entregado,cancelado',
+        ]);
+
+        if($request->estado_pedido == 'entregado'):
+            return $this->entregar($request);
+        elseif($request->estado_pedido == 'cancelado'):
+            return $this->cancelar($request);
+        endif;
+
+        $pedido = Pedido::where('url_pedido', $request->url_pedido)->first();
+
+        $pedido->estado_pedido = $request->estado_pedido;
+        $pedido->fecha_cancelado = null;
+        $pedido->fecha_entregado = null;
+
+        $pedido->save();
     }
 
     public function softDelete(Request $request)
@@ -124,6 +181,21 @@ class PedidoController extends Controller
 
         return response()->json(['message' => 'Pedido restaurado correctamente']);
 
+    }
+
+    public function pdf(Request $request)
+    {
+        $validatedData = $request->validate([
+            'url_pedido' => 'required|exists:pedidos,url_pedido',
+        ]);
+
+        $pedido = Pedido::where('url_pedido', $request->url_pedido)->first();
+
+        $pdf = PDF::loadView('pdfs.factura_pedido', compact('pedido'));
+
+        return response($pdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="factura-'.$pedido->url_pedido.'.pdf"');
     }
 
 

@@ -12,6 +12,7 @@ $(function(){
         return date.toISOString().split('T')[0]; // Formato 'Y-m-d'
     }
 
+
     $("#form_filtro_pedido").submit(function(e){
         e.preventDefault()
         const data = $(this).serialize()
@@ -28,18 +29,43 @@ $(function(){
                 return;
             }else {
                 divAlertaError.hide();
+                let html = '';
                 data.forEach(pedido => {
-                    $("#tbody_pedidos").append(`
-                    <tr>
-                        <td>${pedido.id}</td>
-                        <td>${formatDate(pedido.fecha_ingreso)}</td>
-                        <td>${formatDate(pedido.fecha_entrega)}</td>
-                        <td>${pedido.usuario.persona.nombres} ${pedido.usuario.persona.apellidos}</td>
-                        <td>${pedido.estado_pedido}</td>
-                        <td>${pedido.observacion ?? 'Sin observación'}</td>
-                        <td class="text-end">$${formatCurrency(parseFloat(pedido.total))}</td>
-                        <td class="text-end">$${formatCurrency(parseFloat(pedido.descuento))}</td>
-                        <td>
+                    html += "<tr>";
+                    html += `<td>${pedido.id}</td>`;
+                    html += `<td>${formatDate(pedido.fecha_ingreso)}</td>`;
+                    html += `<td>${formatDate(pedido.fecha_entrega)}</td>`;
+                    html += `<td>${pedido.usuario.persona.nombres} ${pedido.usuario.persona.apellidos}</td>`;
+
+                    switch(pedido.estado_pedido){
+                        case 'a pagar':
+                            pedido.color_estado = 'bg-info';
+                            break;
+                        case 'pendiente':
+                            pedido.color_estado = 'bg-warning';
+                            break;
+                        case 'en envio':
+                            pedido.color_estado = 'bg-primary';
+                            break;
+                        case 'entregado':
+                            pedido.color_estado = 'bg-success';
+                            break;
+                        case 'cancelado':
+                            pedido.color_estado = 'bg-danger';
+                            break;
+                    }
+                   html += `<td><span class="badge p-2 ms-2 ${pedido.color_estado}">${pedido.estado_pedido}</span></td>`;
+
+                    if (pedido.observacion) {
+                        if (pedido.observacion.length > 20) {
+                            html += `<td><a style="cursor:pointer" class="a_ver_observacion" data-id="${pedido.observacion}">${pedido.observacion.substring(0, 20)}...</a></td>`;
+                        }
+                    } else {
+                        html += `<td>Sin observación</td>`;
+                    }
+                    html += `<td class="text-end">$${formatCurrency(parseFloat(pedido.total))}</td>`;
+                    html += `<td class="text-end">$${formatCurrency(parseFloat(pedido.descuento))}</td>`;
+                    html += `<td>
                             <a href="/admin/pedido/${pedido.url_pedido}" class="btn btn-sm btn-info" title="Ver detalles del pedido">
                                 <i class="fas fa-eye"></i>
                             </a>
@@ -50,10 +76,11 @@ $(function(){
                             <!--<button class="btn btn-sm btn-danger button_eliminar_registro" title="Eliminar pedido" data-id="${pedido.url_pedido}">
                                <i class="fas fa-trash"></i>
                              </button>-->
-                        </td>
-                    </tr>
-                `)
+                        </td>`;
+                    html += "</tr>";
+
                 });
+                $("#tbody_pedidos").html(html);
             }
 
         }).fail(function (response) {
@@ -84,6 +111,15 @@ $(function(){
 
     $(".button_activar_registro").click(function () {
         activarRegistro($(this));
+    });
+
+    $(".a_ver_observacion").click(function() {
+        const observacion = $(this).data('id');
+        tmpl.mostrarObservacion(observacion);
+    });
+    $(document).on('click', ".a_ver_observacion", function(){
+        const observacion = $(this).data('id');
+        tmpl.mostrarObservacion(observacion);
     });
 
     async function eliminarRegistro(selector) {
@@ -163,7 +199,6 @@ $(function(){
 
         $('#cambiarEstadoModal').modal('show');
 
-        // Limpiar el modal del DOM cuando se cierra
         $('#cambiarEstadoModal').on('hidden.bs.modal', function () {
             $(this).remove();
         });
@@ -171,7 +206,7 @@ $(function(){
         $("#guardarEstado").click(function() {
             const nuevoEstado = $("#estadoPedido").val();
             $.ajax({
-                url: '/admin/controlador/pedidos/update',
+                url: '/admin/controlador/pedidos/cambiar-estado',
                 method: 'POST',
                 data: {
                     url_pedido: id,

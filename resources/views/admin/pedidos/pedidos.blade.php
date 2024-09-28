@@ -1,8 +1,13 @@
 @php
     use \Carbon\Carbon;
     use Illuminate\Support\Str;
+    use App\Models\Pedido;
 @endphp
 @extends('admin.layouts.panel')
+
+@section('header')
+    <h1 class="h3 mb-0 text-gray-800">Lista de Pedidos</h1>
+@endsection
 
 @section('titulo', 'Lista de Pedidos')
 
@@ -89,10 +94,12 @@
                         <td>{{ Carbon::parse($pedido->fecha_ingreso)->format('Y-m-d')}}</td>
                         <td>{{ $pedido->fecha_entrega ? Carbon::parse($pedido->fecha_entrega)->format('Y-m-d') : 'Sin fecha' }}</td>
                         <td>{{ "{$pedido->persona->nombres} {$pedido->persona->apellidos}" }}</td>
-                        <td>{{ $pedido->estado_pedido }}</td>
+                        <td>
+                            <span class="badge p-2 ms-2 {{ Pedido::colorEstado($pedido->estado_pedido) }}">{{ $pedido->estado_pedido }}</span>
+                        </td>
                         <td>
                             @if($pedido->observacion)
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#observacionModal-{{ $pedido->id }}">
+                                <a style="cursor:pointer" class="a_ver_observacion" data-id="{{$pedido->observacion}}">
                                     {{ Str::limit($pedido->observacion, 20, '...') }}
                                 </a>
                             @else
