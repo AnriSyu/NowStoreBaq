@@ -67,3 +67,4 @@
 @include('parcial.footer')
 <script src="{{asset('js/carrito_articulos.js')}}"></script>
 </body>
+</html>

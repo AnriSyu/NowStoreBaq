@@ -128,9 +128,17 @@ class CarritoController extends Controller
             $pedido->carrito = json_encode($carrito);
             $pedido->estado_registro = 'activo';
             $pedido->observacion = null;
+            $pedido->total = $total;
+            $pedido->descuento = $descuento;
 
             $pedido->save();
             $idPedido = $pedido->id;
+
+            $pedido = Pedido::find($idPedido);
+
+            $pedido->url_pedido = now()->format('Y-m-d') . '_' . $usuario->id . '_' . $idPedido;
+
+            $pedido->save();
 
             $sid = env('TWILIO_SID');
             $token = env('TWILIO_AUTH_TOKEN');
@@ -140,7 +148,7 @@ class CarritoController extends Controller
             $telefono = $persona->celular;
             $nombre = $persona->nombres . ' ' . $persona->apellidos;
 
-            $body = "El usuario $nombre ha realizado un pedido por un total de $$total.00. con descuento de $$descuento.00. Revisa la información en la plataforma de administración. ID Pedido: $idPedido";
+            $body = "El usuario $nombre ha realizado un pedido por un total de $$total.00. con descuento de $$descuento.00. Revisa la información en la plataforma de administración. Link: " . route('admin.pedidos');
 
             $mensaje = $twilio->messages->create(
                 'whatsapp:+57' . $telefono,

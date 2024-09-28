@@ -142,6 +142,17 @@ $(function() {
 
         $.notify("Artículo añadido", "success");
 
+
+        const buttonVolverAAnadir = $('<a>')
+            .attr('href', '/buscar-articulo')
+            .addClass('btn nsb-btn btn-secondary mt-3')
+            .text('Volver a añadir otro artículo');
+
+        $("#button_agregar_bolsa").after(buttonVolverAAnadir);
+
+
+
+
     })
 
 })

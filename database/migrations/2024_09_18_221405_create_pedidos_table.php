@@ -16,10 +16,13 @@ return new class extends Migration
             $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
             $table->timestamp('fecha_ingreso')->useCurrent();
             $table->timestamp('fecha_entregado')->nullable();
-            $table->enum('estado_pedido', ['a pagar', 'pendiente', 'en envio', 'entregado'])->default('pendiente');
+            $table->enum('estado_pedido', ['a pagar', 'pendiente', 'en envio', 'entregado','cancelado'])->default('pendiente');
             $table->json('carrito');
             $table->string('observacion')->nullable();
             $table->string('estado_registro')->default('activo');
+            $table->string('url_pedido')->nullable();
+            $table->decimal('total', 10, 2);
+            $table->decimal('descuento', 10, 2);
             $table->timestamps();
         });
     }

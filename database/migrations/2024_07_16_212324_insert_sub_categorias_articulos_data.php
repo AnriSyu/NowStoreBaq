@@ -34,7 +34,7 @@ return new class extends Migration
                 'id' => 3,
                 'sub_categoria' => 'Faldas',
                 'imagen' => 'uploads/categorias/faldas.jpg',
-                'url_externo'=> 'ttps://nowstorecol.my.canva.site/faldas',
+                'url_externo'=> 'https://nowstorecol.my.canva.site/faldas',
                 'id_categoria'=> 7,
                 'created_at' => now(),
                 'updated_at' => now()

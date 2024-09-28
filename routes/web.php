@@ -9,6 +9,7 @@ require __DIR__.'/articulo.php';
 require __DIR__.'/principal.php';
 require __DIR__.'/carrito.php';
 require __DIR__.'/controller/all.php';
+require __DIR__.'/admin.php';
 
 /*
 |--------------------------------------------------------------------------

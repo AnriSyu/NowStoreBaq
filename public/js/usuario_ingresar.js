@@ -46,7 +46,14 @@ $(function(){
         }).done(function(response){
             $('#span_error').html("");
             if(response.estado === 'ok') {
+
+
                 if(response.tipo === 'login') {
+
+                    if(response.es_administrador) {
+                        window.location.href = response.redireccion
+                    }
+
                     if (window.location.search.includes('?frompage=carrito')) {
                         window.location.href = "/pagar?frompage=login";
                     }else{

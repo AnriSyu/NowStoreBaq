@@ -45,9 +45,6 @@ class ArticuloController extends Controller
 //            '.shein.com.co' => 'shein.com.co',
 //        ];
 //
-//        $url = preg_replace('/\w+\.shein\.com/', 'shein.com.co', $url);
-//        $url = preg_replace('/\w+\.shein\.com\.co/', 'shein.com.co', $url);
-//
 //        $host = parse_url($url, PHP_URL_HOST);
 //
 //        if (array_key_exists($host, $hostsRegistrados)):
@@ -55,6 +52,15 @@ class ArticuloController extends Controller
 //            $url = str_replace($host, $newHost, $url);
 //        endif;
 
+        if (str_contains($host, 'shein.com')) {
+            $host = 'www.shein.com.co';
+        }
+
+        $scheme = $urlParsed['scheme'] ?? 'https';
+        $path = $urlParsed['path'] ?? '';
+        $query = isset($urlParsed['query']) ? '?' . $urlParsed['query'] : '';
+
+        $url = $scheme . '://' . $host . $path . $query;
 
         $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
         $url = addslashes($url);
@@ -97,7 +103,11 @@ class ArticuloController extends Controller
 
             endif;
         endif;
-        try {
+
+
+
+
+//        try {
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlCompleta);
@@ -108,7 +118,8 @@ class ArticuloController extends Controller
             $articulo['nombre'] = $crawler->filter('.product-intro__head-name.fsp-element')->text();
             $articulo['sku'] = $crawler->filter('.product-intro__head-sku')->text();
             $articulo['sku'] = trim(str_replace('SKU:','',$articulo['sku']));
-            $articulo['precio_actual'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .original.from')->text();
+
+//            $articulo['precio_actual'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .original.from')->text();
 
             $articulo['imagenes'] = $crawler->filter('.crop-image-container > .crop-image-container__img')->each(function ($node) {
                 if ($node->attr('data-src') != null && $node->attr('data-src') != ""):
@@ -120,15 +131,15 @@ class ArticuloController extends Controller
             $articulo['imagenes'] = array_filter($articulo['imagenes']);
             $articulo['imagenes'] = array_values($articulo['imagenes']);
 
-            $articulo['precio_original'] = 0;
-            if($crawler->filter('.ProductIntroHeadPrice__head-mainprice > .del-price')->count()>0):
-                $articulo['precio_original'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .del-price')->text();
-            endif;
-
-            $articulo['descuento'] = 0;
-            if($crawler->filter('.ProductIntroHeadPrice__head-mainprice > .discount-label')->count()>0):
-                $articulo['descuento'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .discount-label')->text();
-            endif;
+//            $articulo['precio_original'] = 0;
+//            if($crawler->filter('.ProductIntroHeadPrice__head-mainprice > .del-price')->count()>0):
+//                $articulo['precio_original'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .del-price')->text();
+//            endif;
+//
+//            $articulo['descuento'] = 0;
+//            if($crawler->filter('.ProductIntroHeadPrice__head-mainprice > .discount-label')->count()>0):
+//                $articulo['descuento'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .discount-label')->text();
+//            endif;
 
             $articulo['color'] = 0;
 
@@ -166,6 +177,14 @@ class ArticuloController extends Controller
 
                     array_unshift($articulo['imagenes'],$articulo['imagen_principal']);
 
+                    $getPrice = $productIntroData['getPrice'];
+
+                    $articulo['precio_original'] = $getPrice['retailPrice']['amountWithSymbol'];
+                    $articulo['precio_actual'] = $getPrice['salePrice']['amountWithSymbol'];
+
+                    if($articulo['precio_original'] == $articulo['precio_actual']) $articulo['precio_original'] = '';
+
+                    $articulo['descuento'] = $getPrice['unit_discount'] == 0 ? '' : "-{$getPrice['unit_discount']}%";
 
                     $detail = $productIntroData['detail'];
                     $productDetails = $detail['productDetails'];
@@ -212,7 +231,6 @@ class ArticuloController extends Controller
                         if(count($productIntroData['relation_color'])>0):
 
                             $relationColors = $productIntroData['relation_color'];
-
                             foreach ($relationColors as $relationColor):
                                 foreach ($articulo['colores'] as &$color):
                                     if (trim($color['articulo_sku']) == trim($relationColor['goods_sn'])):
@@ -254,11 +272,11 @@ class ArticuloController extends Controller
 
                 endif;
             endif;
-        }catch (\Exception $e) {
-            $errorDetails = $e->getMessage();
-//            //TODO guardar error en la base de datos
-            return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
-        }
+//        }catch (\Exception $e) {
+//            $errorDetails = $e->getMessage();
+////            //TODO guardar error en la base de datos
+//            return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
+//        }
 
 
         //No se pueden obtener

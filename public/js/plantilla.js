@@ -13,5 +13,28 @@ const tmpl = {
                 return markup;
             }
         });
-    }
+    },
+    confirmarEliminarRegistro: async () => {
+        const result = await Swal.fire({
+            title: '¿Estás seguro de eliminar este registro?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+        return result.isConfirmed;
+    },
+    confirmarActivarRegistro: async () => {
+        const result = await Swal.fire({
+            title: '¿Estás seguro de activar este registro?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, activar',
+            cancelButtonText: 'Cancelar'
+        });
+        return result.isConfirmed;
+    },
+    notificacion: (mensaje,icono='success') => {
+        $.notify(mensaje, icono);
+    },
 }

@@ -41,7 +41,7 @@
             <div class="alert alert-warning mt-3 alert_mensaje_advertencia alert-dismissible" role="alert"
                  id="alert_mensaje_advertencia_imagenes" style="width: 80%;margin: auto">
                 <span class="text-break" id="span_texto_advertencia">Las imágenes del artículo con este color no se cargarán, si necesitas verlas, introduce el enlace del artículo <a
-                        href="/">aquí</a> o vuelve a la página anterior</span>
+                        href="/buscar-articulo">aquí</a> o vuelve a la página anterior</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </div>
@@ -102,7 +102,7 @@
                 <div role="alert" id="alert_mensaje_advertencia_tallas" style="width: 100%;margin: auto;"
                      class="alert-dismissible alert_mensaje_advertencia alert alert-warning mt-3">
                     <span class="text-break" id="span_texto_advertencia">Las tallas del artículo con este color no se cargarán, si necesitas verlas, introduce el enlace del artículo <a
-                            href="/">aquí</a> o vuelve a la página anterior</span>
+                            href="/buscar-articulo">aquí</a> o vuelve a la página anterior</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -114,8 +114,9 @@
                 <button type="button" class="btn btn-light" onclick="cambiarCantidad(1)">+</button>
             </div>
 
-            <button class="mt-4 btn nsb-btn nsb-btn-bolsa btn-lg mt-3" id="button_agregar_bolsa">Añadir a la bolsa
-            </button>
+            <div id="div_buttons text-center">
+            <button class="mt-4 btn nsb-btn nsb-btn-bolsa btn-lg mt-3" id="button_agregar_bolsa">Añadir a la bolsa</button>
+            </div>
             <div class="mt-4 nsb-descripcion">
                 <button id="button_descripcion" class="btn" data-toggle="collapse"
                         data-target="#div_articulo_descripcion">

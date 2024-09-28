@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $id_usuario
@@ -32,6 +32,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereIdUsuario($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereObservacion($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereUpdatedAt($value)
+ * @property string|null $url_pedido
+ * @property string $total
+ * @property string $descuento
+ * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereDescuento($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereUrlPedido($value)
  * @mixin \Eloquent
  */
 class Pedido extends Model
@@ -47,12 +53,20 @@ class Pedido extends Model
         'estado_pedido',
         'carrito',
         'observacion',
-        'estado_registro'
+        'estado_registro',
+        'total',
+        'descuento',
+        'url_pedido'
     ];
 
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'id_usuario');
+    }
+
+    public function persona()
+    {
+        return $this->hasOneThrough(Persona::class, Usuario::class, 'id', 'id_usuario', 'id_usuario', 'id');
     }
 
 }

@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\UsuarioController;
+use App\Http\Middleware\PreventGetRequests;
 
 
 /**
@@ -14,13 +15,26 @@ use App\Http\Controllers\UsuarioController;
  */
 Route::get('/ingresar',[UsuarioController::class,'mostrarIngresar'])->name("login");
 
-/**
- * Ruta para registrar o iniciar sesión al usuario
- * POST
- */
-Route::post('/rginsc', [UsuarioController::class, 'registroIniciarSesion']);
-Route::get('/rginsc', function () {
-    return abort(404);
+Route::middleware(['check.post'])->group(function () {
+
+    /**
+     * Ruta para registrar o iniciar sesión al usuario
+     * POST
+     */
+    Route::post('/rginsc', [UsuarioController::class, 'registroIniciarSesion']);
+
+    /**
+     * Ruta para procesar el formulario de recuperación de cuenta
+     * POST
+     */
+    Route::post('/reccun', [UsuarioController::class, 'recuperarCuenta']);
+
+    /**
+     * Ruta para procesar el formulario de cambio de clave
+     * POST
+     */
+    Route::post('/cbrclv', [UsuarioController::class, 'actualizarClave']);
+
 });
 
 /**
@@ -36,24 +50,6 @@ route::get('/recuperar_cuenta',function() {
  * GET
  */
 Route::get('/logout', [UsuarioController::class, 'cerrarSesion'])->name('logout');
-
-/**
- * Ruta para procesar el formulario de recuperación de cuenta
- * POST
- */
-Route::post('/reccun', [UsuarioController::class, 'recuperarCuenta']);
-Route::get('/reccun', function () {
-    return abort(404);
-});
-
-/**
- * Ruta para procesar el formulario de cambio de clave
- * POST
- */
-Route::post('/cbrclv', [UsuarioController::class, 'actualizarClave']);
-Route::get('/cbrclv', function () {
-    return abort(404);
-});
 
 /**
  * Ruta para verificar la cuenta

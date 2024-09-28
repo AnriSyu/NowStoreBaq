@@ -26,7 +26,7 @@ class UsuarioController extends Controller
         if($usuario):
             $rol = Rol::where('id',$usuario->id_rol)->first();
             if($rol->rol === "administrador"):
-                return redirect("admin/dashboard");
+                return redirect("admin");
             endif;
             return redirect("perfil");
         endif;
@@ -74,7 +74,13 @@ class UsuarioController extends Controller
                 Auth::login($usuario);
 
                 if($rol->rol == 'administrador'):
-                    return redirect("admin");
+                    return response()->json([
+                        'estado' => 'ok',
+                        'mensaje' => 'Login exitoso',
+                        "tipo"=>"login",
+                        "es_administrador"=>true,
+                        "redireccion"=>"admin"
+                    ], 201);
                 endif;
 
                 return response()->json([

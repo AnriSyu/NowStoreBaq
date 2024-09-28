@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $correo
@@ -43,6 +43,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereTokenCambioClave($value)
  * @property string $estado_registro
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereEstadoRegistro($value)
+ * @property-read \App\Models\Rol|null $rol
  * @mixin \Eloquent
  */
 class Usuario extends Authenticatable
@@ -53,11 +54,13 @@ class Usuario extends Authenticatable
 
     protected $fillable = [
         'correo',
+        'id_rol',
         'clave',
         'token_verificacion',
         'esta_verificado',
         'fecha_verificacion',
         'fecha_expiracion_verificacion',
+        'id_persona'
     ];
 
     protected $hidden = [
@@ -71,5 +74,24 @@ class Usuario extends Authenticatable
         'fecha_expiracion_verificacion' => 'datetime',
     ];
 
+    public function persona()
+    {
+        return $this->hasOne(Persona::class, 'id_usuario');
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class, 'id_usuario');
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'id_rol');
+    }
+
+    public function tieneRol($rol)
+    {
+        return $this->rol->rol == $rol;
+    }
 
 }

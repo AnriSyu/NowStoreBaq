@@ -144,7 +144,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="card p-4">
+            <div class="card p-4 mb-3">
                 <h5 class="card-title">Resumen Del Pedido</h5>
                 <p class="card-text">Subtotal: {{$totalFormato}}</p>
                 @if($descuento > 0)
