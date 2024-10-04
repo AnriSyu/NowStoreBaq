@@ -135,7 +135,6 @@ class PedidoController extends Controller
             'url_pedido' => 'required|exists:pedidos,url_pedido',
             'estado_pedido' => 'required|string|in:a pagar,pendiente,en envio,entregado,cancelado',
         ]);
-
         if($request->estado_pedido == 'entregado'):
             return $this->entregar($request);
         elseif($request->estado_pedido == 'cancelado'):
@@ -143,12 +142,13 @@ class PedidoController extends Controller
         endif;
 
         $pedido = Pedido::where('url_pedido', $request->url_pedido)->first();
-
         $pedido->estado_pedido = $request->estado_pedido;
-        $pedido->fecha_cancelado = null;
         $pedido->fecha_entregado = null;
+        $pedido->fecha_cancelado = null;
 
         $pedido->save();
+
+        return response()->json(['message' => 'Estado del pedido actualizado correctamente']);
     }
 
     public function softDelete(Request $request)

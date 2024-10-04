@@ -12,7 +12,7 @@
     height: 100%;
     right: 10px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(35%);
 }
 
 .select2-selection__placeholder {

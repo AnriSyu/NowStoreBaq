@@ -59,6 +59,44 @@ const tmpl = {
             icon: 'info',
             confirmButtonText: 'Aceptar'
         });
-    }
+    },
+    getMunicipios: (selectDepartamento, selectMunicipio) => {
+        const id = selectDepartamento.val();
+
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"/controlador/municipios/getByIdDepartamento",
+            data: {
+                idDepartamento:id
+            },
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(response){
+            let html = "";
+
+            html += `<option value="">Seleccione un municipio</option>`;
+
+            response.data.forEach(municipio => {
+                html += `<option value="${municipio.id}">${municipio.municipio}</option>`;
+            });
+
+            const idMunicipio = selectMunicipio.data("municipio-seleccionado");
+
+            selectMunicipio.html(html).select2();
+
+            if(idMunicipio){
+                selectMunicipio.val(idMunicipio).trigger("change");
+            }
+
+        }).fail(function(response){
+
+            if(response.status === 401) {
+                alert("error al cargar municipios")
+            }
+
+        });
+    },
 
 }

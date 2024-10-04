@@ -155,11 +155,11 @@ class UsuarioController extends Controller
     {
         return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
     }
-    public function mostrarPerfil()
-    {
-        $usuario = Auth::user();
-        return view("usuario.usuario_perfil",["usuario"=>$usuario]);
-    }
+//    public function mostrarPerfil()
+//    {
+//        $usuario = Auth::user();
+//        return view("usuario.usuario_perfil",["usuario"=>$usuario]);
+//    }
 
 
     public function recuperarCuenta(Request $request){

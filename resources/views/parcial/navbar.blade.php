@@ -15,14 +15,14 @@
                     <i class="fas fa-user-circle fa-2x"></i>
                 </a>
                 <ul class="dropdown-menu nsb-dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownUser">
-                    <li><a class="dropdown-item nsb-dropdown-item" href="/perfil">
+                    <li><a class="dropdown-item nsb-dropdown-item" href="/usuario/perfil">
                             <i class="fas fa-user"></i> Perfil
                         </a>
                     </li>
-                    <li><a class="dropdown-item nsb-dropdown-item" href="/ajustes">
-                            <i class="fas fa-cogs"></i> Ajustes
-                        </a>
-                    </li>
+{{--                    <li><a class="dropdown-item nsb-dropdown-item" href="/ajustes">--}}
+{{--                            <i class="fas fa-cogs"></i> Ajustes--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     @if(Auth::user()->tieneRol('administrador'))
                         <li><a class="dropdown-item nsb-dropdown-item" href="/admin">
                                 <i class="fas fa-shield"></i> Admin

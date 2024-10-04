@@ -176,7 +176,9 @@
     border-color: transparent transparent #fff transparent;
 }
 
-
+.nsb-text-primary {
+    color: var(--nsb-first-color);
+}
 
 
 /* FOOTER */

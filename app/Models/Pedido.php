@@ -63,6 +63,21 @@ class Pedido extends Model
         'id_municipio',
     ];
 
+    public static function ObtenerFechaYColor(mixed $pedido)
+    {
+        $fecha = 'Sin fecha';
+        $color = 'bg-warning';
+        $estado = $pedido->estado_pedido;
+        if ($pedido->fecha_entregado):
+            $color = 'bg-success';
+            $fecha = Carbon::parse($pedido->fecha_entregado)->format('Y-m-d');
+        elseif ($pedido->fecha_cancelado):
+            $color = 'bg-danger';
+            $fecha = Carbon::parse($pedido->fecha_cancelado)->format('Y-m-d');
+        endif;
+        return ['color' => $color, 'fecha' => $fecha, 'estado' => $estado];
+    }
+
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'id_usuario');

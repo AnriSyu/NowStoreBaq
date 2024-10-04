@@ -77,7 +77,7 @@
                 <tr>
                     <th scope="col"># Pedido</th>
                     <th scope="col">Fecha de ingreso</th>
-                    <th scope="col">Fecha entregado</th>
+                    <th scope="col">Fecha entregado / cancelado</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Observación</th>
@@ -90,9 +90,12 @@
                 @foreach ($pedidos as $pedido)
                     <tr class="{{ $pedido->estado_registro == 'inactivo' ? 'table-secondary' : '' }}">
 
-                        <td>{{ $pedido->id }}</td>
+                        <td>{{ $pedido->url_pedido }}</td>
                         <td>{{ Carbon::parse($pedido->fecha_ingreso)->format('Y-m-d')}}</td>
-                        <td>{{ $pedido->fecha_entrega ? Carbon::parse($pedido->fecha_entrega)->format('Y-m-d') : 'Sin fecha' }}</td>
+                        @php
+                            $resultado = Pedido::ObtenerFechaYColor($pedido);
+                        @endphp
+                        <td class="{{ $resultado['color'] }}">{{ $resultado['fecha'] }}</td>
                         <td>{{ "{$pedido->persona->nombres} {$pedido->persona->apellidos}" }}</td>
                         <td>
                             <span class="badge p-2 ms-2 {{ Pedido::colorEstado($pedido->estado_pedido) }}">{{ $pedido->estado_pedido }}</span>

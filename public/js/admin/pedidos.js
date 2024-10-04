@@ -34,7 +34,8 @@ $(function(){
                     html += "<tr>";
                     html += `<td>${pedido.id}</td>`;
                     html += `<td>${formatDate(pedido.fecha_ingreso)}</td>`;
-                    html += `<td>${formatDate(pedido.fecha_entrega)}</td>`;
+                    const resultado = obtenerFechaYColor(pedido);
+                    html += `<td class="${resultado.color}">${resultado.fecha}</td>`;
                     html += `<td>${pedido.usuario.persona.nombres} ${pedido.usuario.persona.apellidos}</td>`;
 
                     switch(pedido.estado_pedido){
@@ -220,6 +221,21 @@ $(function(){
                 alert('Error al cambiar el estado del pedido');
             });
         });
+    }
+
+    function obtenerFechaYColor(pedido) {
+        let fecha = 'Sin fecha';
+        let color = 'bg-warning';
+
+        if (pedido.fecha_entregado) {
+            color = 'bg-success';
+            fecha = formatDate(pedido.fecha_entregado);
+        } else if (pedido.fecha_cancelado) {
+            color = 'bg-danger';
+            fecha = formatDate(pedido.fecha_cancelado);
+        }
+
+        return { color, fecha };
     }
 
 

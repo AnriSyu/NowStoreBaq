@@ -1,0 +1,74 @@
+@import url("../Object.css");
+@import url("../partials/select2.css");
+
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+.nsb-usuario-sidebar {
+    background-color: #ffffff;
+    border-right: 1px solid #dee2e6;
+    min-height: 100vh;
+}
+.nsb-usuario-sidebar a {
+    color: #495057;
+    font-weight: 600;
+}
+.nsb-usuario-sidebar .active {
+    background-color: #f1f3f5;
+    border-left: 3px solid var(--nsb-first-color);
+}
+.nsb-usuario-content {
+    padding: 20px;
+}
+
+.nsb-btn-guardar-datos-persona {
+    background-color: var(--nsb-first-color);
+    border: none;
+    color: white;
+    width: 100%;
+}
+
+.nsb-btn-guardar-datos-persona:hover {
+    background-color: var(--nsb-first-color-darker);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .nsb-usuario-sidebar {
+        border-right: none;
+        min-height: auto;
+    }
+}
+
+.nsb-card-pedido-detalle {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid #f8f9fa;
+}
+
+.nsb-card-pedido-detalle:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.card-text {
+    font-size: 0.9rem;
+}
+
+.badge {
+    border-radius: 0.25rem;
+}
+
+.button_ver_carrito {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button_ver_carrito:hover {
+    background-color: #0dcaf0;
+    color: white;
+}
