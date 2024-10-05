@@ -79,37 +79,37 @@
     font-size: 1.3em;
 }
 
-.nsb-card-categoria-a {
-    color: #000;
-    text-decoration: none;
-    display: inline-block;
-}
+/*.nsb-card-categoria-a {*/
+/*    color: #000;*/
+/*    text-decoration: none;*/
+/*    display: inline-block;*/
+/*}*/
 
-.nsb-card-categoria {
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    transition: transform 0.2s;
-    background-color: #f9f9f9;
-    padding:20px;
-    width: 190px;
-    height: 250px;
-}
+/*.nsb-card-categoria {*/
+/*    text-align: center;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 10px;*/
+/*    transition: transform 0.2s;*/
+/*    background-color: #f9f9f9;*/
+/*    padding:20px;*/
+/*    width: 190px;*/
+/*    height: 250px;*/
+/*}*/
 
-.nsb-card-categoria img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-}
+/*.nsb-card-categoria img {*/
+/*    width: 150px;*/
+/*    height: 150px;*/
+/*    object-fit: cover;*/
+/*    border-radius: 50%;*/
+/*}*/
 
-.nsb-card-categoria p {
-    margin-top: 10px;
-    font-size: 20px;
-    overflow: hidden;
-    width: 100%;
-    text-align: center;
-}
+/*.nsb-card-categoria p {*/
+/*    margin-top: 10px;*/
+/*    font-size: 20px;*/
+/*    overflow: hidden;*/
+/*    width: 100%;*/
+/*    text-align: center;*/
+/*}*/
 
 .nsb-seccion-categoria {
     padding-bottom: 20px;
@@ -151,51 +151,59 @@
 
 .nsb-categoria-nav-link{
     color:#000;
+    transition: all 0.3s;
 }
 .nsb-categoria-nav-link:hover{
     font-weight: bolder;
     color:#000;
     cursor:pointer;
 }
+.nsb-categoria-nav-link:focus{
+    font-weight: bolder;
+    color:var(--nsb-first-color);
+    cursor:pointer;
+}
+
+
 
 @media (max-width: 600px) {
     .nsb-container-categorias{
         width: 100%;
     }
-    .nsb-card-categoria-a {
-        color: #000;
-        text-decoration: none;
-        display: inline-block;
-    }
+    /*.nsb-card-categoria-a {*/
+    /*    color: #000;*/
+    /*    text-decoration: none;*/
+    /*    display: inline-block;*/
+    /*}*/
 
-    .nsb-card-categoria {
-        text-align: center;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        transition: transform 0.2s;
-        background-color: #f9f9f9;
-        padding: 5px;
-    }
+    /*.nsb-card-categoria {*/
+    /*    text-align: center;*/
+    /*    border: 1px solid #ddd;*/
+    /*    border-radius: 10px;*/
+    /*    transition: transform 0.2s;*/
+    /*    background-color: #f9f9f9;*/
+    /*    padding: 5px;*/
+    /*}*/
 
-    .nsb-card-categoria img {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 50%;
-    }
+    /*.nsb-card-categoria img {*/
+    /*    width: 150px;*/
+    /*    height: 150px;*/
+    /*    object-fit: cover;*/
+    /*    border-radius: 50%;*/
+    /*}*/
 
-    .nsb-card-categoria p {
-        margin-top: 10px;
-        font-size: 20px;
-        overflow: hidden;
-        width: 100%;
-        text-align: center;
-        word-wrap: break-word;
-        word-break: break-word;
-        white-space: normal;
-        overflow-wrap: break-word;
-        hyphens: auto;
-    }
+    /*.nsb-card-categoria p {*/
+    /*    margin-top: 10px;*/
+    /*    font-size: 20px;*/
+    /*    overflow: hidden;*/
+    /*    width: 100%;*/
+    /*    text-align: center;*/
+    /*    word-wrap: break-word;*/
+    /*    word-break: break-word;*/
+    /*    white-space: normal;*/
+    /*    overflow-wrap: break-word;*/
+    /*    hyphens: auto;*/
+    /*}*/
 
     .nsb-seccion-categoria {
         padding-bottom: 20px;
@@ -205,3 +213,62 @@
     }
 }
 
+.nsb-card-categoria {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+.nsb-card-categoria-a{
+    color: #000;
+    text-decoration: none;
+}
+
+.nsb-card-categoria:hover {
+    transform: scale(1.05);
+}
+
+.nsb-card-img-categoria {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    margin: 15px auto;
+}
+
+.nsb-card-body-categoria{
+    padding: 10px;
+}
+
+.nsb-cad-title-categoria {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.1rem;
+
+}
+
+
+@media (max-width: 600px) {
+    /* más pequeño para vista de celular */
+    .nsb-card-categoria {
+        padding: 10px;
+        height: 250px;
+        width: 100%;
+    }
+    .nsb-card-img-categoria {
+        height: 100px;
+        width: 100px;
+    }
+    .nsb-cad-title-categoria {
+        font-size: 1rem;
+    }
+    .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+
+}

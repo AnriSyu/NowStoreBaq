@@ -57,11 +57,13 @@
 //                        $href =  url('catalogo/' . $categoria->url_interno);
                     @endphp
                     @if($categoria->categoria !== "Tendencias")
-                        <div class="col mb-4">
+                        <div class="col-md-4 mb-4">
                             <a class="nsb-card-categoria-a" href="{{$href}}" target="_blank">
-                                <div class="nsb-card-categoria">
-                                    <img src="{{ asset('storage/'.$categoria->imagen) }}" alt="{{ $categoria->categoria }}">
-                                    <p class="nsb-card-categoria-p">{{ $categoria->categoria }}</p>
+                                <div class="nsb-card-categoria text-center">
+                                    <img src="{{ asset('storage/'.$categoria->imagen) }}" class="nsb-card-img-categoria" alt="{{ $categoria->categoria }}">
+                                    <div class="nsb-card-body-categoria">
+                                        <h5 class="nsb-card-title-categoria">{{ $categoria->categoria }}</h5>
+                                    </div>
                                 </div>
                             </a>
                         </div>
@@ -76,28 +78,26 @@
         <div class="row">
             @foreach ($categorias as $categoria)
                 @if($categoria->subcategorias->isNotEmpty())
-                    <div class="col-12">
-                        <div class="row">
-                            @foreach($categoria->subcategorias as $subcategoria)
-                                @if($subcategoria->url_externo !== "")
-                                    <div class="col mb-4">
-                                        @php
-                                            $categoriaSlug = Str::slug($categoria->categoria, '-');
-                                            $subcategoriaSlug = Str::slug($subcategoria->sub_categoria, '-');
-                                            $href = $subcategoria->url_externo ?: url('catalogo/' . $categoriaSlug . '/' . $subcategoriaSlug);
-//                                             $href = url('catalogo/' . $categoria->url_interno . '/' . $subcategoria->url_interno);
-                                        @endphp
-                                        <a class="nsb-card-categoria-a" href="{{$href}}" target="_blank">
-                                            <div class="nsb-card-categoria">
-                                                <img src="{{ asset('storage/'.$subcategoria->imagen) }}" alt="{{ $subcategoria->sub_categoria }}">
-                                                <p class="nsb-card-categoria-p">{{ $subcategoria->sub_categoria }}</p>
-                                            </div>
-                                        </a>
+                    @foreach($categoria->subcategorias as $subcategoria)
+                        @if($subcategoria->url_externo !== "")
+                        @php
+                            $categoriaSlug = Str::slug($categoria->categoria, '-');
+                            $subcategoriaSlug = Str::slug($subcategoria->sub_categoria, '-');
+                            $href = $subcategoria->url_externo ?: url('catalogo/' . $categoriaSlug . '/' . $subcategoriaSlug);
+//                                  $href = url('catalogo/' . $categoria->url_interno . '/' . $subcategoria->url_interno);
+                        @endphp
+                        <div class="col-md-4 mb-4">
+                            <a class="nsb-card-categoria-a" href="{{$href}}" target="_blank">
+                                <div class="nsb-card-categoria">
+                                    <img src="{{ asset('storage/'.$subcategoria->imagen) }}" alt="{{ $subcategoria->sub_categoria }}"  class="nsb-card-img-categoria">
+                                    <div class="nsb-card-body-categoria">
+                                        <h5 class="nsb-card-title-categoria">{{ $subcategoria->sub_categoria }}</h5>
                                     </div>
-                                @endif
-                            @endforeach
+                                </div>
+                            </a>
                         </div>
-                    </div>
+                        @endif
+                    @endforeach
                 @endif
             @endforeach
         </div>
