@@ -35,7 +35,10 @@
                     <a href="/terminos" class="text-decoration-none nsb-text-secondary">Términos y condiciones</a> |
                     <a href="/politica-privacidad" class="text-decoration-none nsb-text-secondary">Política de privacidad</a>
                 </p>
-                <p class="nsb-footer-parrafo nsb-text-secondary">&copy; 2024 NowStoreCol. Todos los derechos reservados.</p>
+                @php
+                    $year = date('Y');
+                @endphp
+                <p class="nsb-footer-parrafo nsb-text-secondary">&copy; {{$year}} NowStoreCol. Todos los derechos reservados.</p>
             </div>
         </div>
     </div>

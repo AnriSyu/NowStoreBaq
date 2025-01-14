@@ -52,9 +52,7 @@ class ArticuloController extends Controller
 //            $url = str_replace($host, $newHost, $url);
 //        endif;
 
-        if (str_contains($host, 'shein.com')) {
-            $host = 'www.shein.com.co';
-        }
+
 
         $scheme = $urlParsed['scheme'] ?? 'https';
         $path = $urlParsed['path'] ?? '';
@@ -69,7 +67,6 @@ class ArticuloController extends Controller
         $endpointScraperApi = env('ENDPOINT_URL_SCRAPER_SCRAPERAPI');
 
         $servicio = $endpointCrawlbase;
-
         $urlCompleta = $servicio . $url;
         $tipoUrl = "web";
 
@@ -77,11 +74,12 @@ class ArticuloController extends Controller
             $tipoUrl = "api";
         endif;
 
-
+        if (str_contains($host, 'shein.com')) {
+            $host = 'www.shein.com.co';
+        }
         if (!str_contains($host, 'shein.com')):
             return back()->withErrors(['input_url_articulo' => 'El enlace debe ser de shein.com.'])->withInput();
         endif;
-
 
         if($tipoUrl == "api"):
 
@@ -91,7 +89,6 @@ class ArticuloController extends Controller
             $response = curl_exec($ch);
             curl_close($ch);
             if(preg_match('/var shareInfo = (\{.*?\});/s', $response, $matches)):
-
                 $json = $matches[1];
                 $data = json_decode($json, true);
                 $tituloArticulo = str_replace(' ', '', $data['shareTitle']);
@@ -163,16 +160,14 @@ class ArticuloController extends Controller
             $crawler->filter('script')->each(function ($node) use (&$scriptContent) {
                 $scriptContent .= $node->text();
             });
-
             if (str_contains($scriptContent, "window.gbRawData")):
-                if (preg_match('/window\.gbRawData\s*=\s*(\{.*\});/s', $scriptContent, $matches)):
+                if (preg_match('/window\.gbRawData\s*=\s*(\{.*)/s', $scriptContent, $matches)):
                     $jsonCleaned = strstr($matches[1], 'document.dispatchEvent', true);
                     $jsonCleaned = rtrim($jsonCleaned, ',');
                     $jsonCleaned = preg_replace('/<[^>]*>/', '', $jsonCleaned);
                     $jsonDecoded = json_decode($jsonCleaned, true);
 
                     $productIntroData = $jsonDecoded['productIntroData'];
-
                     $articulo['imagen_principal'] = $productIntroData['goods_imgs']['main_image']['origin_image'];
 
                     array_unshift($articulo['imagenes'],$articulo['imagen_principal']);
