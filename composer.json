@@ -17,6 +17,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laraveles/spanish": "^1.5",
+        "livewire/livewire": "^3.5",
         "symfony/dom-crawler": "^6.4",
         "twilio/sdk": "^8.3",
         "yajra/laravel-datatables-oracle": "^10.11"
