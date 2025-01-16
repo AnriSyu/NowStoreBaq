@@ -146,7 +146,14 @@
         <div class="col-md-4">
             <div class="card p-4 mb-3">
                 <h5 class="card-title">Resumen Del Pedido</h5>
-                <p class="card-text">Subtotal: {{$totalFormato}}</p>
+                <p class="card-text">Subtotal:
+                    @if($mitadTotal < $total)
+                        <span style="text-decoration: line-through; color: #999;">{{$totalFormato}}</span>
+                        <span style="color: #0984e3; font-weight: bold;">{{$precioMitadTotalFormato}}</span>
+                    @else
+                        {{$totalFormato}}
+                    @endif
+                </p>
                 @if($descuento > 0)
                     <p class="card-text">Descuento: {{$descuentoFormato}}</p>
                 @endif

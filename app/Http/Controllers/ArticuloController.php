@@ -304,6 +304,7 @@ class ArticuloController extends Controller
 
         session(['total' => $request->input('total')]);
         session(['descuento' => $request->input('descuento')]);
+        session(['precioMitadTotal' => $request->input('precioMitadTotal')]);
 
         if (!Auth::check()) {
             return response()->json([

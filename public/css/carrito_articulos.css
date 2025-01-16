@@ -22,8 +22,8 @@ body {
 
 .nsb-articulo-precio-borrado{
     font-size:0.8em;
-    margin-top: 10px;
-    margin-left:10px;
+    margin-top: 5px;
+    margin-left:5px;
     color: #8f8f8f;
 }
 
@@ -68,6 +68,52 @@ body {
     color:var(--nsb-first-color-darker);
     font-weight: bolder;
     font-size:1.5em;
+}
+
+.btn-5050{
+    color: #000;
+    font-size: 0.8em;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+.btn-5050:hover {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    color: #000;
+}
+
+.btn-5050-desactivado{
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+}
+
+.btn-5050-activo{
+    background-color: #3498db;
+    border: 1px solid #3498db;
+    color: #fff;
+}
+
+.btn-5050-activo:hover{
+    background-color: #2980b9;
+    border: 1px solid #2980b9;
+    color: #fff;
+}
+
+.nsb-articulo-recargo {
+    font-size: 0.9em;
+    color: #d63031;
+}
+.nsb-articulo-precio-mitad {
+    font-size: 0.9em;
+    color: #0984e3;
+}
+
+.nsb-precio-mitad{
+    font-size:1.3em;
+    color: #0984e3;
+    font-weight: bolder;
 }
 
 @media (max-width: 600px) {

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{asset('css/admin/panel.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/panel_Object.css')}}">
     <link rel="stylesheet" href="{{asset('css/lib/minimal.css')}}">
+    <link rel="stylesheet" href="{{asset('css/lib/hint.min.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link

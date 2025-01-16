@@ -28,7 +28,7 @@ class ClaveCambiada extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('now@storebaq.com'),
+            from: new Address(env('MAIL_USERNAME')),
             subject: 'Haz cambiado tu contraseña',
         );
     }

@@ -11288,3 +11288,9 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
     width: 100%;
 }
+
+.nsb-info-5050 {
+    color: #f1c40f;
+    font-size:1.5em;
+    cursor: pointer;
+}

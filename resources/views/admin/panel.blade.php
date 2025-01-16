@@ -51,6 +51,7 @@
                     <th>Cliente</th>
                     <th>Fecha de Pedido</th>
                     <th>Total</th>
+                    <th>50/50 <i class="fas fa-info-circle nsb-info-5050" id="i_info_5050" data-toggle="tooltip" title="Muestra el total de los productos seleccionados para el 50/50 dividido a la mitad."></i></th>
                     <th>Estado</th>
                 </tr>
                 </thead>
@@ -60,6 +61,7 @@
                         <td>{{ $pedido->persona->nombres }} {{ $pedido->persona->apellidos }}</td>
                         <td>{{ $pedido->fecha_ingreso }}</td>
                         <td>${{ number_format($pedido->total,2) }}</td>
+                        <td>${{ number_format($pedido->mitad_total,2) }}</td>
                         <td><span class="badge {{ Pedido::colorEstado($pedido->estado_pedido) }}">{{ $pedido->estado_pedido }}</span></td>
                     </tr>
                 @endforeach

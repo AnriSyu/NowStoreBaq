@@ -19,6 +19,7 @@
     <script src="{{asset("js/lib/bootstrap.bundle.min.js")}}"></script>
     <script src="{{asset("js/lib/all.min.js")}}"></script>
     <script src="{{asset('js/lib/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{asset('js/lib/notify.min.js')}}"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 @include('parcial.navbar')
@@ -56,7 +57,8 @@
                     <h3 class="card-title">Resumen Del Pedido</h3>
                     <div class="text-start mt-4">
                         <span class="nsb-resumen-precio" id="span_resumen_precio"></span>
-                        <p class="nsb-resumen-descuento" id="p_resumen_descuento"></p>
+                        <span class="nsb-resumen-descuento d-block" id="p_resumen_descuento"></span>
+                        <span class="nsb-precio-mitad" id="span_precio_mitad"></span>
                     </div>
                     <button id="button_pagar" type="button" class="mt-3 btn nsb-btn nsb-btn-primario" style="width: 100%;font-size:2em">GENERAR PEDIDO <span class="span_cantidad_articulos" id="span_cantidad_articulos_pagar"></span></button>
                 </div>

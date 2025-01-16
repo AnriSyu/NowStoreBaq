@@ -83,6 +83,7 @@
                     <th scope="col">Observación</th>
                     <th scope="col" class="text-end">Total</th>
                     <th scope="col" class="text-end">Descuento</th>
+                    <th>50/50 <i class="fas fa-info-circle nsb-info-5050" id="i_info_5050" data-toggle="tooltip" title="Muestra el total de los productos seleccionados para el 50/50 dividido a la mitad."></i></th>
                     <th scope="col" class="text-center">Acciones</th>
                 </tr>
                 </thead>
@@ -111,6 +112,7 @@
                         </td>
                         <td class="text-end">${{ number_format($pedido->total, 2) }}</td>
                         <td class="text-end">${{ number_format($pedido->descuento, 2) }}</td>
+                        <td class="text-end">${{ number_format($pedido->mitad_total, 2) }}</td>
                         <td class="text-center">
                             <a href="{{ route('admin.pedido',$pedido->url_pedido) }}" class="btn btn-sm btn-info" title="Ver detalles del pedido">
                                 <i class="fas fa-eye"></i>

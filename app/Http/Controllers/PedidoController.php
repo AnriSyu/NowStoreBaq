@@ -10,8 +10,7 @@ class PedidoController extends Controller
 {
     public function mostrarPedidos()
     {
-
-        $pedidos = Pedido::paginate(35);
+        $pedidos = Pedido::orderBy('fecha_ingreso', 'desc')->paginate(35);
 
         return view('admin.pedidos.pedidos', compact('pedidos'));
     }

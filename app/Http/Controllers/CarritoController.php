@@ -30,14 +30,17 @@ class CarritoController extends Controller
         $total = session('total');
         $descuento = session('descuento');
         $carrito = session('carrito');
+        $mitadTotal = session('precioMitadTotal');
 
         $totalFormato = "$" . number_format($total, 2, ',', '.');
 
         $descuentoFormato = "$" . number_format($descuento, 2, ',', '.');
 
+        $precioMitadTotalFormato = "$" . number_format($mitadTotal, 2, ',', '.');
+
         $persona = Persona::where('id_usuario', $usuario->id)->first();
 
-        return view('principal.pagar', compact('departamentos', 'municipios', 'total', 'descuento', 'carrito', 'totalFormato', 'descuentoFormato', 'persona'));
+        return view('principal.pagar', compact('departamentos', 'municipios', 'total', 'descuento', 'carrito', 'totalFormato', 'descuentoFormato', 'persona','precioMitadTotalFormato','mitadTotal'));
     }
 
     public function guardarPersona(Request $request)
@@ -114,6 +117,7 @@ class CarritoController extends Controller
         $total = session('total');
         $descuento = session('descuento');
         $carrito = session('carrito');
+        $mitadTotal = session('precioMitadTotal');
 
         if (!$total || !$carrito) {
             return response()->json(['estado' => 'error', 'mensaje' => 'No se encontró información del pedido.'], 422);
@@ -129,6 +133,7 @@ class CarritoController extends Controller
             $pedido->estado_registro = 'activo';
             $pedido->observacion = null;
             $pedido->total = $total;
+            $pedido->mitad_total = $mitadTotal;
             $pedido->descuento = $descuento;
 
             $pedido->save();
@@ -148,7 +153,7 @@ class CarritoController extends Controller
             $telefono = $persona->celular;
             $nombre = $persona->nombres . ' ' . $persona->apellidos;
 
-            $body = "El usuario $nombre ha realizado un pedido por un total de $$total.00. con descuento de $$descuento.00. Revisa la información en la plataforma de administración. Link: " . route('admin.pedidos');
+            $body = "El usuario $nombre ha realizado un pedido por un total de $$total.00. con descuento de $$descuento.00. precio sumado 50/50 de $$mitadTotal Revisa la información en la plataforma de administración. Link: " . route('admin.pedidos');
 
             $mensaje = $twilio->messages->create(
                 'whatsapp:+57' . $telefono,

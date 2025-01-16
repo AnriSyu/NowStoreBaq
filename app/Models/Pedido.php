@@ -39,6 +39,8 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereDescuento($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereUrlPedido($value)
+ * @property string $mitad_total
+ * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereMitadTotal($value)
  * @mixin \Eloquent
  */
 class Pedido extends Model
@@ -57,6 +59,7 @@ class Pedido extends Model
         'observacion',
         'estado_registro',
         'total',
+        'mitad_total',
         'descuento',
         'url_pedido',
         'id_departamento',

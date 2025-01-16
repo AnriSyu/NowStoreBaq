@@ -64,6 +64,10 @@
                         <button type="submit" class="btn nsb-btn nsb-btn-primario" id="button_reintentar">Reintentar
                         </button>
                     </form>
+                    <span>
+                        Los errores son comunes, te invitamos a intentarlo de nuevo varias veces hasta que funcione.
+                        De lo contrario, contacta con el soporte técnico.
+                    </span>
                     <button type="button" class="btn nsb-btn nsb-btn-cancelar" id="button_cancelar"
                             data-bs-dismiss="modal" aria-label="Close">Cancelar
                     </button>

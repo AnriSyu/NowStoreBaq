@@ -31,7 +31,7 @@ class CambiarClave extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('now@storebaq.com'),
+            from: new Address(env('MAIL_USERNAME')),
             subject: 'Recuperación de cuenta',
         );
     }

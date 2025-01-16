@@ -128,7 +128,7 @@ $(function(){
 
             const idPedido = response.idPedido;
 
-            localStorage.removeItem("carrito");
+            //localStorage.removeItem("carrito");
 
             window.open(`https://wa.me/${wamenumber}?text=Hola, he realizado un pedido con el id ${idPedido}`);
 
