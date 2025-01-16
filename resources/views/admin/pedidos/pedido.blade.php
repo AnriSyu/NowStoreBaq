@@ -141,7 +141,10 @@
                                         <strong>SKU:</strong> {{ $item->sku }}<br>
                                         <strong>Color:</strong> {{ $item->color }}<br>
                                         <strong>Talla:</strong> {{ $item->talla }}<br>
-                                        <strong>Cantidad:</strong> {{ $item->cantidad }}
+                                        <strong>Cantidad:</strong> {{ $item->cantidad }}<br>
+                                        <strong>50/50 activo:</strong> {{ $item->fifty_fifty ? "Activado" : "Desactivado" }}
+                                        <br>
+                                        <strong>Mitad precio: </strong><span style="font-weight: bolder;color:#f27474">{{ $item->precio_mitad ? "$". number_format($item->precio_mitad,2) : "Sin mitad de precio" }}</span>
                                     </p>
                                     <div class="d-flex justify-content-between">
                                         <span class="text-muted"><s>{{ $item->precio_original_con_simbolo }}</s></span>

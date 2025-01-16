@@ -130,7 +130,7 @@ $(function(){
 
             //localStorage.removeItem("carrito");
 
-            window.open(`https://wa.me/${wamenumber}?text=Hola, he realizado un pedido con el id ${idPedido}`);
+            window.open(`https://wa.me/${wamenumber}?text=Hola, he realizado un pedido con el #pedido: ${idPedido} y me gustaría confirmar la entrega.`);
 
             window.location.href = "/carrito";
 

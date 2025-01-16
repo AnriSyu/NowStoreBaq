@@ -26,7 +26,9 @@ $(function(){
                                 <strong>Talla:</strong> <span class="badge bg-info text-dark">${item.talla}</span><br>
                                 <strong>Cantidad:</strong> <span class="fw-bold">${item.cantidad}</span><br>
                                 <strong>Precio:</strong> <span class="text-success fw-bold">${item.precio_venta_con_simbolo}</span><br>
-                                <strong>Descuento:</strong> <span class="nsb-text-primary fw-bold">${item.descuento_con_simbolo} (${item.precio_original_con_simbolo})</span>
+                                <strong>Descuento:</strong> <span class="nsb-text-primary fw-bold">${item.descuento_con_simbolo} (${item.precio_original_con_simbolo})</span> <br>
+                                <strong>50/50 activado:</strong> <span class="text-success fw-bold">${item.fifty_fifty ? "Activado" : "Desactivado"}</span> <br>
+                                <strong>Precio mitad: </strong> <span class="text-success fw-bold">${item.precio_mitad ? "$"+item.precio_mitad.toLocaleString("es-CO", { minimumFractionDigits: 2, maximumFractionDigits: 2 }  ) : "N/A"}</span> <br>
                             </p>
                         </div>
                     </div>

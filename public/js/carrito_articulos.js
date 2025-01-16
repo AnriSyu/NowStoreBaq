@@ -204,8 +204,15 @@ function pintarHtml() {
         if (item.precio_venta <= 20000) {
             precioFinal += montoRecargo;
             precioMitad = precioFinal / 2;
+
+            carrito[index].precio_mitad = precioMitad;
+            carrito[index].fifty_fifty = true;
+
         } else {
-            precioMitad = item.precio_venta;
+            precioMitad = 0;
+
+            carrito[index].precio_mitad = 0;
+            carrito[index].fifty_fifty = false;
         }
 
         if (item.precio_venta <= 20000) {
@@ -332,6 +339,7 @@ function toggleFiftyFifty(index){
     let precioMitadElement = $("#span_precio_mitad" + index);
     let btn5050 = $("#btn50_50_" + index);
 
+
     if(btn5050.hasClass("btn-5050-desactivado")){
         btn5050.removeClass("btn-5050-desactivado");
         btn5050.addClass("btn-5050-activo");
@@ -339,13 +347,18 @@ function toggleFiftyFifty(index){
         precioMitadElement.show();
         precioMitadElement.text(`(${precioMitadF})`);
         btn5050.notify("50/50 activado", {position: "top", className: "success"});
-
+        articulo.precio_mitad = precioMitad;
+        articulo.fifty_fifty = true;
+        carrito[index] = articulo;
     }else{
         btn5050.removeClass("btn-5050-activo");
         btn5050.addClass("btn-5050-desactivado");
         recargo.hide();
         precioMitadElement.hide();
         btn5050.notify("50/50 desactivado", {position: "top", className: "error"});
+        articulo.precio_mitad = 0;
+        articulo.fifty_fifty = false;
+
     }
 
     recalcularTotales();

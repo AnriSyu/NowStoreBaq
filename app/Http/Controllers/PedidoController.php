@@ -24,6 +24,7 @@ class PedidoController extends Controller
             return redirect()->route('admin.pedidos');
         endif;
 
+
         return view('admin.pedidos.pedido', compact('pedido'));
     }
 

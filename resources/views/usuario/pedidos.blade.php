@@ -38,7 +38,8 @@
                                     </p>
                                     <p class="card-text">
                                         <strong>Total:</strong> ${{ number_format($pedido->total, 2) }}<br>
-                                        <strong>Descuento:</strong> ${{ number_format($pedido->descuento, 2) }}
+                                        <strong>Descuento:</strong> ${{ number_format($pedido->descuento, 2) }} <br>
+                                        <strong>Total 50/50:</strong> ${{ number_format($pedido->mitad_total, 2) }}
                                     </p>
                                     <button class="btn btn-outline-info button_ver_carrito" title="Ver carrito del pedido" data-id="{{$pedido->url_pedido}}">
                                         <i class="fas fa-eye"></i> Ver carrito

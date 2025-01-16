@@ -153,7 +153,7 @@ class CarritoController extends Controller
             $telefono = $persona->celular;
             $nombre = $persona->nombres . ' ' . $persona->apellidos;
 
-            $body = "El usuario $nombre ha realizado un pedido por un total de $$total.00. con descuento de $$descuento.00. precio sumado 50/50 de $$mitadTotal Revisa la información en la plataforma de administración. Link: " . route('admin.pedidos');
+            $body = "El usuario $nombre ha realizado un pedido por un total de $$total.00. con descuento de $$descuento.00. precio sumado 50/50 de $$mitadTotal Revisa la información en la plataforma de administración. Link: " . route('admin.pedido', ['url_pedido' => $pedido->url_pedido]);
 
             $mensaje = $twilio->messages->create(
                 'whatsapp:+57' . $telefono,
@@ -167,7 +167,9 @@ class CarritoController extends Controller
             session()->forget('total');
             session()->forget('descuento');
 
-            return response()->json(['estado' => 'ok', 'mensaje' => 'Pedido realizado correctamente.', 'wamenumber' => env('PHONE_NUMBER_ADMIN'), 'idPedido' => $idPedido]);
+            $urlPedido = $pedido->url_pedido;
+
+            return response()->json(['estado' => 'ok', 'mensaje' => 'Pedido realizado correctamente.', 'wamenumber' => env('PHONE_NUMBER_ADMIN'), 'idPedido' => $urlPedido]);
 
         } catch (\Exception $e) {
 

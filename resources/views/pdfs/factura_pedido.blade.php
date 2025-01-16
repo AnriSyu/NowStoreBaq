@@ -29,6 +29,7 @@
             <th>Precio</th>
             <th>Descuento</th>
             <th>Subtotal</th>
+            <th>Mitad de precio y recargo</th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +40,7 @@
                 <td>{{ $item->precio_venta_con_simbolo }}</td>
                 <td>${{ number_format($item->precio_venta * $item->descuento / 100,2) }}</td>
                 <td>${{ number_format($item->precio_venta * $item->cantidad, 2) }}</td>
+                <td>${{ number_format($item->precio_mitad,2)}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -58,6 +60,10 @@
         <tr>
             <td class="total">Total</td>
             <td class="total">${{ number_format($pedido->total - $pedido->descuento, 2) }}</td>
+        </tr>
+        <tr>
+            <td class="total">Total productos y recargo</td>
+            <td class="total">${{ number_format($pedido->mitad_total, 2) }}</td>
         </tr>
         </tbody>
     </table>
