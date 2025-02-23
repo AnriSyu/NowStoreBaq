@@ -1,4 +1,4 @@
-@php use App\Models\Pedido; @endphp
+@php use App\Models\Pedido; use App\Models\Pago @endphp
 @extends('admin.layouts.panel')
 
 @section('header')
@@ -17,11 +17,14 @@
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Detalles del Pedido - {{$pedido->estado_pedido}}</h5>
                 <div>
-                    <span class="text-white me-2" style="cursor:pointer" title="Entregar Pedido" id="span_entregar_pedido">
+                    <span class="text-white " style="cursor:pointer" title="Entregar Pedido" id="span_entregar_pedido">
                         <i class="fas fa-2x fa-check-circle"></i>
                     </span>
                     <span class="text-white" style="cursor:pointer" title="Cancelar Pedido" id="span_cancelar_pedido">
                         <i class="fas fa-2x fa-times-circle"></i>
+                    </span>
+                    <span class="text-white" style="cursor:pointer" title="Ver Pagos" data-bs-toggle="modal" id="span_ver_pagos" data-bs-target="#modal_ver_pagos">
+                        <i class="fas fa-2x fa-money-bill-wave"></i>
                     </span>
                 </div>
             </div>
@@ -49,18 +52,30 @@
                         <button class="btn text-black btn-sm " title="Editar" id="button_editar_estado_pedido">
                             <i class="fas fa-edit"></i>
                         </button>
-
                     </div>
+
+                    <div class="col-md-6">
+                        <strong>URL del Pedido:</strong> <a href="{{ $pedido->url_pedido }}" target="_blank">{{ $pedido->url_pedido }}</a>
+                    </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-md-6">
                         <strong>Total:</strong> ${{ Pedido::formatearTotal($pedido->total) }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Estado pago:</strong> <span class="badge p-2 ms-2 {{ Pago::colorPago($pago->estado_pago) }}">
+                            {{ $pago->estado_pago }}
+                        </span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <strong>Descuento:</strong> ${{ Pedido::formatearTotal($pedido->descuento) }}
                     </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-md-6">
-                        <strong>URL del Pedido:</strong> <a href="{{ $pedido->url_pedido }}" target="_blank">{{ $pedido->url_pedido }}</a>
+                        <strong>50/50:</strong> ${{ Pedido::formatearTotal($pedido->mitad_total) }}
                     </div>
                 </div>
                 <div class="row">
@@ -68,11 +83,9 @@
                         <strong>Observación:</strong>
                         <div class="d-flex align-items-center">
                             <p class="mb-0 me-2" id="p_observacion">{{ $pedido->observacion ?? "Sin observación" }}</p>
-                            @if($pedido->observacion)
-                                <button class="btn text-black btn-sm " title="Editar" id="button_editar_observacion">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            @endif
+                            <button class="btn text-black btn-sm " title="Editar" id="button_editar_observacion">
+                                <i class="fas fa-edit"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -193,4 +206,105 @@
 
     </div>
     <script src="{{asset("js/admin/pedido.js")}}"></script>
+    <div class="modal fade" id="modal_ver_pagos" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" >Pagos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Estado del pago:</strong> <span id="span_estado_pago"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Método del pago:</strong> <span id="span_metodo_pago"></span>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="align-middle">Pago parcial</th>
+                                <th>
+                                    <button class="btn btn-primary btn" id="button_pagar_parcial" title="Pagar Parcial">
+                                        <i class="fa-solid fa-clock fa-2x"></i>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Monto Pagado Parcial
+                                    <button class="btn text-black btn-sm button-editar" data-target-type="text" data-target="#td_monto_pagado_parcial" data-button-save="#tfoot_guardar_cambios_parcial" title="Editar" id="button_editar_monto_parcial">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td>Fecha Pago Parcial
+                                    <button class="btn text-black btn-sm button-editar" data-target-type="date" data-target="#td_fecha_pago_parcial" data-button-save="#tfoot_guardar_cambios_parcial" title="Editar" id="button_editar_fecha_parcial">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="td_monto_pagado_parcial"></td>
+                                <td id="td_fecha_pago_parcial"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="tfoot-guardar" id="tfoot_guardar_cambios_parcial">
+                            <tr>
+                                <td colspan="2">
+                                    <button class="btn btn-primary button-guardar" id="button_guardar_cambios_parcial" data-monto-target="#td_monto_pagado_parcial" data-fecha-target="#td_fecha_pago_parcial" data-save-type="parcial">
+                                        Guardar Cambios
+                                    </button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="align-middle">
+                                    Pago total
+                                </th>
+                                <th>
+                                    <button class="btn btn-primary btn" id="button_pagar_total" title="Pagar Total">
+                                        <i class="fa-solid fa-check fa-2x"></i>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Monto Pagado Total
+                                    <button class="btn text-black btn-sm button-editar" data-button-save="#tfoot_guardar_cambios_total"  data-target-type="text" data-target="#td_monto_pagado_total" title="Editar" id="button_editar_monto_total">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td>Fecha Pago Total
+                                    <button class="btn text-black btn-sm button-editar" data-button-save="#tfoot_guardar_cambios_total" data-target-type="date" data-target="#td_fecha_pago_total" title="Editar" id="button_editar_fecha_total">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="td_monto_pagado_total"></td>
+                                <td id="td_fecha_pago_total"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="tfoot-guardar" id="tfoot_guardar_cambios_total">
+                            <tr>
+                                <td colspan="2">
+                                    <button class="btn btn-primary button-guardar" id="button_guardar_cambios_total" data-save-type="total" data-monto-target="#td_monto_pagado_total" data-fecha-target="#td_fecha_pago_total">
+                                        Guardar Cambios
+                                    </button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

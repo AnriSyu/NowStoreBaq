@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pago;
 use App\Models\Pedido;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -20,12 +21,14 @@ class PedidoController extends Controller
 
         $pedido = Pedido::where('url_pedido', $url_pedido)->first();
 
+        $pago = Pago::where('id_pedido', $pedido->id)->first();
+
         if(!$pedido):
             return redirect()->route('admin.pedidos');
         endif;
 
 
-        return view('admin.pedidos.pedido', compact('pedido'));
+        return view('admin.pedidos.pedido', compact('pedido'), compact('pago'));
     }
 
     public function get(Request $request)

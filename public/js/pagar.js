@@ -129,8 +129,7 @@ $(function(){
             const idPedido = response.idPedido;
 
             //localStorage.removeItem("carrito");
-
-            window.open(`https://wa.me/${wamenumber}?text=Hola, he realizado un pedido con el #pedido: ${idPedido} y me gustaría confirmar la entrega.`);
+            window.open(`https://wa.me/${wamenumber}?text=Hola, he realizado un pedido con el nro. pedido: ${idPedido} y me gustaría confirmar la entrega.`);
 
             window.location.href = "/carrito";
 

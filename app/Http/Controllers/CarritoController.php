@@ -6,6 +6,7 @@ use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Pedido;
 use App\Models\Persona;
+use App\Models\Pago;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client as TwilioClient;
@@ -144,6 +145,15 @@ class CarritoController extends Controller
             $pedido->url_pedido = now()->format('Y-m-d') . '_' . $usuario->id . '_' . $idPedido;
 
             $pedido->save();
+
+            $pago = new Pago();
+            $pago->id_pedido = $idPedido;
+            $pago->monto_pagado_parcial = 0;
+            $pago->monto_pagado_total = 0;
+            $pago->fecha_pago_parcial = null;
+            $pago->fecha_pago_total = null;
+            $pago->estado_pago = 'pendiente';
+            $pago->save();
 
             $sid = env('TWILIO_SID');
             $token = env('TWILIO_AUTH_TOKEN');

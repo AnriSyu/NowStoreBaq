@@ -4,6 +4,8 @@ $(function(){
 
     const url_pedido = url.split('/').pop();
 
+    $(".tfoot-guardar").hide();
+
     $("#span_entregar_pedido").click(async function(){
         const result = await tmpl.confirmarProceso('¿Estás seguro de entregar este pedido?');
         if(result){
@@ -17,6 +19,110 @@ $(function(){
             cambiarEstado(url_pedido, 'cancelar');
         }
     });
+    $("#span_ver_pagos").click(function(){
+        $.ajax({
+            url: '/admin/controlador/pago/getByUrl',
+            method: 'POST',
+            data: {
+                url_pedido: url_pedido,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(response) {
+            const data = response.data[0];
+            $("#span_estado_pago").text(data.estado_pago);
+            $("#span_metodo_pago").text(data.metodo_pago);
+            $("#td_monto_pagado_parcial").text(formatearDinero(data.monto_pagado_parcial));
+            $("#td_monto_pagado_total").text(formatearDinero(data.monto_pagado_total));
+            $("#td_fecha_pago_parcial").text(data.fecha_pago_parcial === null ? 'No se ha realizado un pago parcial' : formatearFecha(data.fecha_pago_parcial));
+            $("#td_fecha_pago_total").text(data.fecha_pago_total === null ? 'No se ha realizado un pago total' : formatearFecha(data.fecha_pago_total));
+        })
+    });
+
+    $("#button_pagar_parcial").click(function(){
+        $.ajax({
+            url: '/admin/controlador/pago/pagar-parcial',
+            method: 'POST',
+            data: {
+                url_pedido: url_pedido,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(response) {
+            location.reload();
+        }).fail(function(response) {
+            tmpl.notificacionError('Error al pagar parcialmente el pedido');
+        });
+    });
+
+    $("#button_pagar_total").click(function(){
+        $.ajax({
+            url: '/admin/controlador/pago/pagar-total',
+            method: 'POST',
+            data: {
+                url_pedido: url_pedido,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(response) {
+            location.reload();
+        }).fail(function(response) {
+            tmpl.notificacionError('Error al pagar totalmente el pedido');
+        });
+    });
+
+    $(".button-editar").click(function(){
+        const target = $(this).data('target');
+        const text = $(`${target}`).text();
+        let type = $(this).data('target-type');
+        let title;
+        const buttonSave = $($(this).data('button-save'));
+        buttonSave.show();
+        switch (type) {
+            case 'text':
+                title = "Escribe sin '$', sin decimales, ni puntos";
+                break;
+            case 'date':
+                title = "Selecciona una fecha, formato: dd/mm/aaaa";
+                break;
+            default:
+                title = "Escribe el nuevo texto";
+                break;
+        }
+        $(`${target}`).html(`<input type="${type}" value="${text}" class="form-control" title="${title}">`)
+        .find('input').focus()
+        .find('input').blur(function(){
+            const nuevoTexto = $(this).val();
+            $(`${target}`).html(nuevoTexto);
+        });
+
+    })
+
+    $(".button-guardar").click(function(){
+        let fecha = $(this).data('fecha-target');
+        let monto = $(this).data('monto-target');
+        let nuevoMonto;
+        nuevoMonto = $(monto).find('input').val() ? $(monto).find('input').val() : $(monto).text();
+        nuevoMonto = nuevoMonto.replace(/[^0-9,]/g, '')
+            .replace(/,.*$/, '');
+        let nuevoFecha = $(fecha).find('input').val() ? $(fecha).find('input').val() : $(fecha).text();
+        const saveType = $(this).data('save-type');
+        const button = $(this);
+        $.ajax({
+            url: '/admin/controlador/pago/updateFechaMonto',
+            method: 'POST',
+            data: {
+                url_pedido: url_pedido,
+                fecha: nuevoFecha,
+                monto: nuevoMonto,
+                tipo: saveType,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(response) {
+            button.hide();
+            location.reload();
+        }).fail(function(response) {
+            tmpl.notificacionError('Error al actualizar el pedido');
+        });
+
+    })
 
     $("#button_editar_estado_pedido").click(function(){
         modalCambiarEstado($(this));
@@ -200,5 +306,15 @@ $(function(){
             $('#carrito-tabla').show(); // Mostrar vista en tabla
         }
     });
+
+    function formatearDinero(valor) {
+        return new Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP'
+        }).format(valor);
+    }
+    function formatearFecha(fecha) {
+        return new Intl.DateTimeFormat('es-CO').format(new Date(fecha));
+    }
 
 })
