@@ -131,6 +131,50 @@
         </div>
 
         <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
+                <h5>Estado de Seguimiento del Pedido</h5>
+                <div>
+                    <span class="text-white " style="cursor:pointer" title="Agregar seguimiento" id="span_agregar_seguimiento">
+                        <i class="fas fa-2x fa-plus-circle"></i>
+                    </span>
+{{--                    <span class="text-white " style="cursor:pointer" title="Seguir seguimiento por orden" id="span_seguir_seguimiento">--}}
+{{--                        <i class="fas fa-2x fa-arrow-circle-right"></i>--}}
+{{--                    </span>--}}
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered" id="tabla_seguimiento">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Estado</th>
+                        <th>Mensaje</th>
+                        <th>Fecha de Actualización</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody_seguimiento">
+                    @foreach ($seguimientos as $seguimiento)
+                        <tr>
+                            <td>{{ $seguimiento->id }}</td>
+                            <td>{{ $seguimiento->estado->nombre }}</td>
+                            <td>{{ $seguimiento->mensaje }}</td>
+                            <td>{{ Pedido::formatearFecha($seguimiento->fecha_actualizacion) }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm button_editar_seguimiento" title="Editar"  data-id="{{ $seguimiento->id }}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="card mb-4 shadow-sm">
             <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Carrito de Compras</h5>
 {{--                <div>--}}

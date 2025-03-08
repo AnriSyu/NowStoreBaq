@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 return [
+
+    'DB' => DB::class,
 
     /*
     |--------------------------------------------------------------------------

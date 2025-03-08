@@ -41,6 +41,11 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereUrlPedido($value)
  * @property string $mitad_total
  * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereMitadTotal($value)
+ * @property string|null $fecha_cancelado
+ * @property-read \App\Models\Departamento|null $departamento
+ * @property-read \App\Models\Municipio|null $municipio
+ * @property-read \App\Models\Persona|null $persona
+ * @method static \Illuminate\Database\Eloquent\Builder|Pedido whereFechaCancelado($value)
  * @mixin \Eloquent
  */
 class Pedido extends Model
@@ -101,6 +106,11 @@ class Pedido extends Model
         return $this->belongsTo(Municipio::class, 'id_municipio');
     }
 
+    public function seguimientos()
+    {
+        return $this->hasMany(Seguimiento::class, 'id_pedido');
+    }
+
     public static function getCarritoAttribute($value)
     {
         return json_decode($value);
@@ -139,7 +149,7 @@ class Pedido extends Model
         if(!$fecha) {
             return '';
         }
-        return Carbon::parse($fecha)->format('Y-m-d');
+        return Carbon::parse($fecha)->format('d-m-Y H:i:s');
     }
 
 }

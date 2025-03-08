@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departamento;
+use App\Models\EstadoSeguimiento;
 use App\Models\Municipio;
 use App\Models\Pedido;
 use App\Models\Persona;
 use App\Models\Pago;
+use App\Models\Seguimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client as TwilioClient;
@@ -172,6 +174,17 @@ class CarritoController extends Controller
                     'body' => $body
                 ]
             );
+
+            $segui = new Seguimiento();
+            $estadoSeguimiento = EstadoSeguimiento::where('nombre', 'Confirmado')->first();
+
+            $segui->id_pedido = $idPedido;
+            $segui->id_estado = $estadoSeguimiento->id;
+            $segui->mensaje = 'Pedido confirmado';
+            $segui->fecha_actualizacion = now();
+
+            $segui->save();
+
 
             session()->forget('carrito');
             session()->forget('total');

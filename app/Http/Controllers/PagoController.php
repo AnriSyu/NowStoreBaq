@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EstadoSeguimiento;
 use App\Models\Pedido;
+use App\Models\Seguimiento;
 use Illuminate\Http\Request;
 use App\Models\Pago;
 
@@ -56,6 +58,16 @@ class PagoController extends Controller
             'estado_pago' => 'parcial'
         ]);
 
+        $segui = new Seguimiento();
+        $estadoSeguimiento = EstadoSeguimiento::where('nombre', 'Pago pendiente')->first();
+
+        $segui->id_pedido = $pedido->id;
+        $segui->id_estado = $estadoSeguimiento->id;
+        $segui->fecha_actualizacion = now();
+        $segui->mensaje = 'Pago parcial realizado';
+
+        $segui->save();
+
         $response = ["estado" => "ok", "mensaje" => "Pago realizado", "data" => $pago];
 
         return response()->json($response);
@@ -92,6 +104,15 @@ class PagoController extends Controller
             'estado_pago' => 'completo'
         ]);
 
+        $segui = new Seguimiento();
+        $estadoSeguimiento = EstadoSeguimiento::where('nombre', 'Pago completado')->first();
+
+        $segui->id_pedido = $pedido->id;
+        $segui->id_estado = $estadoSeguimiento->id;
+        $segui->fecha_actualizacion = now();
+        $segui->mensaje = 'Pago total realizado';
+
+        $segui->save();
 
         $response = ["estado" => "ok", "mensaje" => "Pago realizado", "data" => $pago];
 

@@ -157,6 +157,116 @@ $(function(){
         });
     });
 
+    $(".button_editar_seguimiento").click(async function(){
+        const id = $(this).data('id');
+        const tr = $(this).closest('tr');
+        const estado = tr.find('td:eq(1)').text();
+        const mensaje = tr.find('td:eq(2)').text();
+        const fecha = tr.find('td:eq(3)').text();
+        const EstadosSeguimientos = await cargarEstadosSeguimientos();
+
+        const nuevoTr = `
+        <tr>
+            <td></td>
+            <td>
+            <select class="form-select" name="estado_seguimiento" id="select_estado_editar_seguimiento">
+                <option value="">Selecciona</option>
+                ${EstadosSeguimientos.map(estadoM => `<option value="${estadoM.id}" ${estadoM.nombre === estado ? 'selected' : ''}>${estadoM.nombre}</option>`)}
+            </select>
+            </td>
+            <td><input type="text" class="form-control" name="mensaje" id="input_mensaje_editar_seguimiento" value="${mensaje}"></td>
+            <td><input type="date" class="form-control" name="fecha" id="input_fecha_editar_seguimiento" value="${fecha}"></td>
+            <td>
+                <button class="btn btn-primary" id="guardar_seguimiento">Guardar</button>
+            </td>
+        </tr>
+        `;
+        tr.replaceWith(nuevoTr);
+        $("#guardar_seguimiento").click(function(){
+            const id_estado = $("#select_estado_editar_seguimiento").val();
+            const mensaje = $("#input_mensaje_editar_seguimiento").val();
+            const fecha = $("#input_fecha_editar_seguimiento").val();
+            $.ajax({
+                url: '/admin/controlador/seguimiento/update',
+                method: 'POST',
+                data: {
+                    id: id,
+                    estado_seguimiento: id_estado,
+                    mensaje: mensaje,
+                    fecha: fecha,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                }
+            }).done(function(response) {
+                location.reload();
+            }).fail(function(response) {
+                tmpl.notificacionError(response.responseJSON.message);
+            });
+        });
+    });
+
+    $("#span_agregar_seguimiento").click(async function(){
+        const EstadosSeguimientos =await cargarEstadosSeguimientos();
+        const tablaSeguimiento = $("#tabla_seguimiento");
+        const nuevaFila = `
+        <tr>
+            <td></td>
+            <td>
+            <select class="form-select" name="estado_seguimiento" id="select_estado_nuevo_seguimiento">
+                <option value="">Selecciona</option>
+                ${EstadosSeguimientos.map(estado => `<option value="${estado.id}">${estado.nombre}</option>`)}
+            </select>
+            </td>
+            <td><input type="text" class="form-control" name="mensaje" id="input_mensaje_nuevo_seguimiento"></td>
+            <td><input type="date" class="form-control" name="fecha" id="input_fecha_nuevo_seguimiento"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5" class="tfoot-guardar">
+                <button class="btn btn-primary" id="guardar_nuevo_seguimiento">Guardar seguimiento</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+            Dejar Fecha en blanco si se desea que sea la fecha actual
+            </td>
+        </tr>
+        `;
+        tablaSeguimiento.append(nuevaFila);
+        $("#guardar_nuevo_seguimiento").click(function(){
+            const id_estado = $("#select_estado_nuevo_seguimiento").val();
+            const mensaje = $("#input_mensaje_nuevo_seguimiento").val();
+            const fecha = $("#input_fecha_nuevo_seguimiento").val();
+            $.ajax({
+                url: '/admin/controlador/seguimiento/insert',
+                method: 'POST',
+                data: {
+                    url_pedido: url_pedido,
+                    estado_seguimiento: id_estado,
+                    mensaje: mensaje,
+                    fecha: fecha,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                }
+            }).done(function(response) {
+                location.reload();
+            }).fail(function(response) {
+                tmpl.notificacionError(response.responseJSON.message);
+            });
+        });
+    });
+
+
+    async function cargarEstadosSeguimientos(){
+        try {
+            let response = await $.ajax({
+                url: '/admin/controlador/estado_seguimiento/get',
+                method: 'GET'
+            });
+            return response.data;
+        } catch (error) {
+            tmpl.notificacionError('Error al cargar los estados de seguimiento');
+            return [];
+        }
+    }
 
     function cambiarEstado(url, estado){
         $.ajax({

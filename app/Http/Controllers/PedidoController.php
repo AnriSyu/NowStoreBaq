@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EstadoSeguimiento;
 use App\Models\Pago;
 use App\Models\Pedido;
+use App\Models\Seguimiento;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -27,8 +29,9 @@ class PedidoController extends Controller
             return redirect()->route('admin.pedidos');
         endif;
 
+        $seguimientos = Seguimiento::where('id_pedido', $pedido->id)->orderBy('fecha_actualizacion', 'desc')->get();
 
-        return view('admin.pedidos.pedido', compact('pedido'), compact('pago'));
+        return view('admin.pedidos.pedido', compact('pedido','pago','seguimientos') );
     }
 
     public function get(Request $request)
@@ -112,6 +115,16 @@ class PedidoController extends Controller
 
         $pedido->save();
 
+        $segui = new Seguimiento();
+        $estadoSeguimiento = EstadoSeguimiento::where('nombre', 'Entregado')->first();
+
+        $segui->id_pedido = $pedido->id;
+        $segui->id_estado = $estadoSeguimiento->id;
+        $segui->fecha_actualizacion = now();
+        $segui->mensaje = 'Pedido entregado';
+
+        $segui->save();
+
         return response()->json(['message' => 'Pedido entregado correctamente']);
     }
 
@@ -128,6 +141,16 @@ class PedidoController extends Controller
         $pedido->fecha_entregado = null;
 
         $pedido->save();
+
+        $segui = new Seguimiento();
+        $estadoSeguimiento = EstadoSeguimiento::where('nombre', 'Cancelado')->first();
+
+        $segui->id_pedido = $pedido->id;
+        $segui->id_estado = $estadoSeguimiento->id;
+        $segui->fecha_actualizacion = now();
+        $segui->mensaje = 'Pedido cancelado';
+
+        $segui->save();
 
         return response()->json(['message' => 'Pedido cancelado correctamente']);
     }

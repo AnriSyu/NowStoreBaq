@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $correo
@@ -44,6 +44,9 @@ use Illuminate\Notifications\Notifiable;
  * @property string $estado_registro
  * @method static \Illuminate\Database\Eloquent\Builder|Usuario whereEstadoRegistro($value)
  * @property-read \App\Models\Rol|null $rol
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Pedido> $pedidos
+ * @property-read int|null $pedidos_count
+ * @property-read \App\Models\Persona|null $persona
  * @mixin \Eloquent
  */
 class Usuario extends Authenticatable
