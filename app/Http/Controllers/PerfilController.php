@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departamento;
+use App\Models\EstadoSeguimiento;
 use App\Models\Municipio;
 use App\Models\Pedido;
 use App\Models\Persona;
+use App\Models\Seguimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,4 +45,21 @@ class PerfilController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    public function verSeguimiento(Request $request)
+    {
+        try{
+            $pedido = Pedido::where('url_pedido', $request->id)->first();
+            $seguimientos = Seguimiento::where('id_pedido', $pedido->id)->orderBy('fecha_actualizacion', 'desc')->get();
+            $estado_seguimiento = new EstadoSeguimiento();
+            foreach($seguimientos as $seguimiento){
+                $seguimiento->estado_seguimiento_nombre = $estado_seguimiento->find($seguimiento->id_estado)->nombre;
+            }
+
+            return response()->json(['seguimientos' => $seguimientos]);
+        }catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
 }

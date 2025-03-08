@@ -72,3 +72,68 @@ body {
     background-color: #0dcaf0;
     color: white;
 }
+
+
+
+.status {
+    color: #00ff00;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.new-tag {
+    background-color: orange;
+    color: black;
+    font-size: 0.8em;
+    padding: 3px 6px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.tracking-step {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding: 10px 0;
+}
+
+.tracking-step::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background-color: #888;
+    border-radius: 50%;
+    position: absolute;
+    left: -12px;
+    top: 10px;
+}
+
+.tracking-step:first-child::before {
+    background-color: #00ff00;
+}
+
+.tracking-step:first-child {
+    font-weight: bold;
+}
+
+.tracking-step:last-child::before {
+    background-color: #888;
+}
+
+.tracking-line {
+    position: absolute;
+    left: -9px;
+    top: 10px;
+    width: 2px;
+    height: calc(100% + 10px);
+    background-color: #555;
+}
+
+.tracking-content {
+    margin-left: 20px;
+}
+
+.time {
+    font-size: 0.9em;
+    color: #aaa;
+}

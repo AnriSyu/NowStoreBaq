@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/controlador/municipios/getByIdDepartamento',
-        '/usuario/pedido/ver-carrito'
+        '/usuario/pedido/ver-carrito',
+        '/usuario/pedido/ver-seguimiento'
     ];
 }

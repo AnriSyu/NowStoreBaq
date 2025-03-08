@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 
 class SeguimientoController extends Controller
 {
-    public function get(Request $request): \Illuminate\Http\JsonResponse
+    public function getByUrl(Request $request): \Illuminate\Http\JsonResponse
     {
         $response = ["estado" => "error", "mensaje" => "No se encontraron seguimientos", "data" => []];
 

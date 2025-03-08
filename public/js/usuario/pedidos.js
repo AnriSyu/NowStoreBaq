@@ -67,4 +67,61 @@ $(function(){
             tmpl.notificacionError(response.responseJSON.mensaje)
         })
     })
-})
+
+    $(".button_ver_seguimiento").click(function(){
+        var id = $(this).data("id")
+        $.ajax({
+            url: "/usuario/pedido/ver-seguimiento",
+            type: "POST",
+            data: {id: id},
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(response){
+            let items = response.seguimientos;
+            let modalBodyHtml = '<div class="row">';
+            items.forEach(function(item,index) {
+                modalBodyHtml += `
+                <div class="tracking-step">
+                ${index > 0 ? '<div class="tracking-line"></div>' : ''}
+                <div class="tracking-content">
+                    <div>${item.estado_seguimiento_nombre}</div>
+                    <div class="time">${item.fecha_actualizacion}</div>
+                    <div class="message">${item.mensaje}</div>
+                </div>
+            </div>
+            `;
+            });
+            modalBodyHtml += '</div>';
+
+            let modalHtml = `
+            <div class="modal fade" id="seguimientoModal" tabindex="-1" aria-labelledby="seguimientoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="seguimientoModalLabel">Rastreo de Pedido #${id}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ${modalBodyHtml}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+            $('body').append(modalHtml);
+
+            $('#seguimientoModal').modal('show');
+
+            $('#seguimientoModal').on('hidden.bs.modal', function () {
+                $(this).remove();
+            });
+
+        }).fail(function(response){
+            tmpl.notificacionError(response.responseJSON.mensaje)
+        });
+    });
+});

@@ -44,6 +44,9 @@
                                     <button class="btn btn-outline-info button_ver_carrito" title="Ver carrito del pedido" data-id="{{$pedido->url_pedido}}">
                                         <i class="fas fa-eye"></i> Ver carrito
                                     </button>
+                                    <button class="btn btn-outline-primary button_ver_seguimiento my-2" title="Ver seguimiento del pedido" data-id="{{$pedido->url_pedido}}">
+                                        <i class="fas fa-eye"></i> Rastrear pedido
+                                    </button>
                                 </div>
                             </div>
                         </div>

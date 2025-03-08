@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('pedido')->group(function () {
             Route::post('ver-carrito', [PerfilController::class, 'verCarrito'])->name('usuario.pedidos.ver-carrito');
+            Route::post('ver-seguimiento', [PerfilController::class, 'verSeguimiento'])->name('usuario.pedidos.ver-seguimiento');
         });
 
     });
