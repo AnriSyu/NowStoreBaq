@@ -83,7 +83,7 @@
             @if (count($articulo['tallas'])!==0)
 
                 <p class="mt-4">
-                    <strong id="strong_titulo_talla">{{$articulo['titulo_talla']}}:</strong>
+                    <strong id="strong_titulo_talla">Talla</strong>
                     <small id="error_seleccionar_talla" style="color:red"></small>
                 </p>
                 <div class="nsb-tallas d-flex flex-wrap">
@@ -132,9 +132,6 @@
                             </tr>
                         @endforeach
                     </table>
-                    {{--                        @foreach($articulo['descripcion'] as $descripcion)--}}
-                    {{--                            <li><strong>{{$descripcion['indice']}}</strong> {{$descripcion['valor']}}</li>--}}
-                    {{--                        @endforeach--}}
                 </div>
             </div>
             <div class="nsb-tienda">
@@ -149,7 +146,6 @@
                         </div>
                         <div class="col-sm">
                             <span class="fw-bolder">{{$articulo['tienda']['nombre']}}</span>
-                            <p class="text-break">{{$articulo['tienda']['descripciones']}}</p>
                         </div>
                     </div>
                 </div>
@@ -157,20 +153,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade modal-lg" id="modal_guia_talla" tabindex="-1" role="dialog" aria-labelledby="modal_guia_talla"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="sizeGuideModalLabel">Guía de Tallas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @include('parcial.guia_talla')
-            </div>
-        </div>
-    </div>
-</div>
+{{--<d8--}}
 @include('parcial.footer')
 <script src="{{asset('js/mostrar_articulo.js')}}"></script>
 </body>

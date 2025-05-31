@@ -74,13 +74,12 @@ class ArticuloController extends Controller
             $tipoUrl = "api";
         endif;
 
-        if (str_contains($host, 'shein.com')) {
+        if (str_contains($host, 'shein.com')):
             $host = 'www.shein.com.co';
-        }
+        endif;
         if (!str_contains($host, 'shein.com')):
             return back()->withErrors(['input_url_articulo' => 'El enlace debe ser de shein.com.'])->withInput();
         endif;
-
         if($tipoUrl == "api"):
 
             $ch = curl_init();
@@ -103,8 +102,7 @@ class ArticuloController extends Controller
 
 
 
-
-        try {
+//        try {
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlCompleta);
@@ -112,50 +110,6 @@ class ArticuloController extends Controller
             $data = curl_exec($ch);
             curl_close($ch);
             $crawler = new Crawler($data);
-            $articulo['nombre'] = $crawler->filter('.product-intro__head-name.fsp-element')->text();
-            $articulo['sku'] = $crawler->filter('.product-intro__head-sku')->text();
-            $articulo['sku'] = trim(str_replace('SKU:','',$articulo['sku']));
-
-//            $articulo['precio_actual'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .original.from')->text();
-
-            $articulo['imagenes'] = $crawler->filter('.crop-image-container > .crop-image-container__img')->each(function ($node) {
-                if ($node->attr('data-src') != null && $node->attr('data-src') != ""):
-                    return $node->attr('data-src');
-                endif;
-            });
-
-            //quitar las imagenes vacias
-            $articulo['imagenes'] = array_filter($articulo['imagenes']);
-            $articulo['imagenes'] = array_values($articulo['imagenes']);
-
-//            $articulo['precio_original'] = 0;
-//            if($crawler->filter('.ProductIntroHeadPrice__head-mainprice > .del-price')->count()>0):
-//                $articulo['precio_original'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .del-price')->text();
-//            endif;
-//
-//            $articulo['descuento'] = 0;
-//            if($crawler->filter('.ProductIntroHeadPrice__head-mainprice > .discount-label')->count()>0):
-//                $articulo['descuento'] = $crawler->filter('.ProductIntroHeadPrice__head-mainprice > .discount-label')->text();
-//            endif;
-
-            $articulo['color'] = 0;
-
-            if($crawler->filter('.color-block > .sub-title')->count()>0):
-                $articulo['color'] = $crawler->filter('.color-block > .sub-title')->text();
-                $articulo['color'] = str_replace(":","",$articulo['color']);
-            endif;
-
-            $articulo['iva'] = 0;
-
-            if($crawler->filter('.product-intro__head-tax')->count()>0):
-                $articulo['iva'] = $crawler->filter('.product-intro__head-tax')->text();
-            endif;
-
-            $articulo['titulo_talla'] = $crawler->filter('.product-intro__size > .product-intro__size-title')->text();
-
-            $articulo['tallas'] = $crawler->filter('.product-intro__size-radio-inner.product-intro__sizes-item-text--one')->each(function ($node) {
-                return $node->text();
-            });
 
             $crawler->filter('script')->each(function ($node) use (&$scriptContent) {
                 $scriptContent .= $node->text();
@@ -167,98 +121,83 @@ class ArticuloController extends Controller
                     $jsonCleaned = preg_replace('/<[^>]*>/', '', $jsonCleaned);
                     $jsonDecoded = json_decode($jsonCleaned, true);
 
-                    $productIntroData = $jsonDecoded['productIntroData'];
-                    $articulo['imagen_principal'] = $productIntroData['goods_imgs']['main_image']['origin_image'];
 
-                    array_unshift($articulo['imagenes'],$articulo['imagen_principal']);
 
-                    $getPrice = $productIntroData['getPrice'];
+                    $modules = $jsonDecoded['modules'] ?? null;
 
-                    $articulo['precio_original'] = $getPrice['retailPrice']['amountWithSymbol'];
-                    $articulo['precio_actual'] = $getPrice['salePrice']['amountWithSymbol'];
+                    $productInfo = $modules['productInfo'] ?? null;
+                    $priceInfo = $modules['priceInfo'] ?? null;
+                    $storeInfo = $modules['storeInfo'] ?? null;
+                    $saleAttr = $modules['saleAttr'] ?? null;
+
+
+                    $articulo['nombre'] = $productInfo['goods_name'] ?? '';
+
+                    $articulo['imagen_principal'] = $productInfo['goods_img'] ?? '';
+
+                    $articulo['sku'] = $productInfo['goods_sn'] ?? '';
+
+                    $articulo['goods_id'] = $productInfo['goods_id'] ?? '';
+
+                    $articulo['precio_original'] = $priceInfo['retailPrice']['amountWithSymbol'] ?? '';
+
+                    $articulo['precio_actual'] = $priceInfo['salePrice']['amountWithSymbol'] ?? '';
 
                     if($articulo['precio_original'] == $articulo['precio_actual']) $articulo['precio_original'] = '';
 
-                    $articulo['descuento'] = $getPrice['unit_discount'] == 0 ? '' : "-{$getPrice['unit_discount']}%";
+                    $articulo['descuento'] = $priceInfo['unitDiscount'] == 0 ? '' : "-{$priceInfo['unitDiscount']}%";
 
-                    $detail = $productIntroData['detail'];
-                    $productDetails = $detail['productDetails'];
-
-                    foreach ($productDetails as $indice => $valor):
-                        $articulo['descripcion'][$indice]['indice'] = $valor['attr_name'];
-                        $articulo['descripcion'][$indice]['valor'] = $valor['attr_value'];
-
-                        if($valor['attr_name'] == "Color"):
-                            if($articulo['color']===0):
-                                $articulo['color'] = $valor['attr_value'];
-                            endif;
-                        endif;
-
+                    foreach ($productInfo['currentSkcImgInfo']['skcImages'] as $indice => $valor):
+                        $articulo['imagenes'][$indice] = $valor;
                     endforeach;
 
-                    $storeInfo = $productIntroData['storeInfo'];
+                    foreach ($saleAttr['mainSaleAttribute']['info'] as $indice => $valor):
+                        if ($valor['goods_id'] == $articulo['goods_id']):
+                            $articulo['color'] = $valor['attr_value'];
+                        endif;
+                        $articulo['colores'][$indice] = [
+                            'articulo_sku' => $valor['goods_sn'],
+                            'articulo_goods_id' => $valor['goods_id'],
+                            'color_imagen' => $valor['goods_color_image'] ?? '',
+                            'color_titulo' => $valor['attr_value'],
+                            'articulo_nombre' => $valor['goods_url_name']
+                        ];
+                    endforeach;
+
+                    $i = 0;
+
+                    foreach ($productInfo['allColorDetailImages'] as $indice => $valor):
+                        //si $indice es diferente a $articulo['goods_id'] eso significa que es otro color, por lo tanto
+                        //hay que guardar todas las imagenes que contenga dentro del indice
+                        if ($indice != $articulo['goods_id']):
+                            foreach ($valor as $indice2 => $valor2):
+                                $articulo['colores'][$i]['imagenes'][$indice2] = $valor2;
+                            endforeach;
+                            $i++;
+                        endif;
+                    endforeach;
+
+                    //tallas
+
+                    foreach ($saleAttr['sizeInfo']['sizeInfo'] as $indice => $valor):
+                        $articulo['tallas'][$indice] = $valor['attr_value_name'];
+                    endforeach;
+
+
+                    //descripción del artículo
+
+                    foreach ($productInfo['productDescriptionInfo']['productDetails'] as $indice => $valor):
+                        $articulo['descripcion'][$indice]['indice'] = $valor['attr_name'];
+                        $articulo['descripcion'][$indice]['valor'] = $valor['attr_value'];
+                    endforeach;
+
+                    foreach($articulo['descripcion'] as $descripcion):
+                        endforeach;
 
                     $articulo['tienda'] = [
                         'nombre' => $storeInfo['title'],
                         'logo' => $storeInfo['logo'],
-                        'descripciones' => $storeInfo['descriptions'],
-
                     ];
-
-                    $articulo['colores'] = [];
-
-                    if ($articulo['color'] !== 0):
-
-                        if(count($productIntroData['colorData']['colorList'])>0):
-
-                            $colorList = $productIntroData['colorData']['colorList'];
-
-                            foreach ($colorList as $indice => $valor):
-                                $articulo['colores'][$indice] = [
-                                    'color_imagen' => $valor['goods_color_image'] ?? '',
-                                    'color_titulo' => $valor['goods_title'],
-                                    'articulo_sku' => $valor['goods_sn']
-                                ];
-                            endforeach;
-
-                        endif;
-
-                        if(count($productIntroData['relation_color'])>0):
-
-                            $relationColors = $productIntroData['relation_color'];
-                            foreach ($relationColors as $relationColor):
-                                foreach ($articulo['colores'] as &$color):
-                                    if (trim($color['articulo_sku']) == trim($relationColor['goods_sn'])):
-                                        $color['articulo_nombre'] = $relationColor['goods_name'];
-                                        $color['articulo_imagen'] = $relationColor['original_img'];
-                                        $color['articulo_precio_original'] = $relationColor['retailPrice']['amountWithSymbol'];
-                                        $color['articulo_precio_venta'] = $relationColor['salePrice']['amountWithSymbol'];
-                                        $color['articulo_descuento'] = "-{$relationColor['unit_discount']}%";
-
-                                        foreach ($relationColor['productDetails'] as $indice => $valor):
-                                            $color['articulo_descripcion'][$indice]['indice'] = $valor['attr_name'];
-                                            $color['articulo_descripcion'][$indice]['valor'] = $valor['attr_value'];
-                                        endforeach;
-
-                                    endif;
-                                endforeach;
-                            endforeach;
-
-
-                            foreach ($articulo['colores'] as &$color):
-                                if ($color['articulo_sku'] == $articulo['sku']):
-                                        $color['articulo_nombre']  = $articulo['nombre'];
-                                        $color['articulo_precio_original']  = $articulo['precio_original'];
-                                        $color['articulo_precio_venta']  = $articulo['precio_actual'];
-                                        $color['articulo_descuento'] = $articulo['descuento'];
-                                        $color['articulo_descripcion']  = $articulo['descripcion'];
-                                        $color['articulo_imagen'] = $articulo['imagen_principal'];
-                                endif;
-                            endforeach;
-
-                        endif;
-
-                    endif;
 
 
                     foreach ($articulo['colores'] as &$color):
@@ -267,20 +206,11 @@ class ArticuloController extends Controller
 
                 endif;
             endif;
-        }catch (\Exception $e) {
-            $errorDetails = $e->getMessage();
-//            //TODO guardar error en la base de datos
-            return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
-        }
-
-
-        //No se pueden obtener
-//        $articulo['valoracion'] = $crawler->filter('.rate-num')->text();
-//        $articulo['comentarios_comunes'] = $crawler->filter('.fit-item')->each(function ($node) {
-//            $fitName = $node->filter('.fit-name')->text();
-//            $fitValue = $node->filter('.common-reviews__progress+span')->text();
-//            return ['fitName' => $fitName, 'fitValue' => $fitValue];
-//        });
+//        }catch (\Exception $e) {
+//            $errorDetails = $e->getMessage();
+////            //TODO guardar error en la base de datos
+//            return back()->withInput()->with(['error' => 'Hubo un problema al buscar el artículo. Por favor, inténtalo de nuevo o contacta con el administrador.', "detalle" => $errorDetails]);
+//        }
 
         $articulo["tipo_url"] = $tipoUrl;
 
